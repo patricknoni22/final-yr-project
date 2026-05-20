@@ -1,9 +1,8 @@
-import { View, Text } from "react-native";
+import { Slot } from "expo-router";
 
 export default function Screen() {
   return (
-    <View>
-      <Text>Screen</Text>
-    </View>
+       <Slot />
+    
   );
 }
