@@ -17,15 +17,15 @@ export default function Screen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <header>
+      <View>
         <View style={styles.header}>
           <Text style={styles.headtx}>Create Account</Text>
           <Text>Join the academic community Today
           </Text>
 
         </View>
-      </header>
-      <main>
+      </View>
+      <View>
         <View>
           <View style={styles.inpuDIV}>
             <Text StyleSheet={styles.inputtt}>
@@ -51,7 +51,7 @@ export default function Screen() {
               keyboardType="email-address"
               value={email}
               aria-label="Enter your email"
-              onChangeTcontext={setEmail}
+              onChangeText={setEmail}
             />
            </View>
           
@@ -94,11 +94,11 @@ export default function Screen() {
         </View>
 
         
-      </main>
-      <footer>
+      </View>
+      <View>
         <View style={styles.foot}>
           <Text style={styles.footpar}>
-            <input type="checkbox" name="terms" id="terms" />
+            <Text style={styles.checkbox}>[]</Text>
             <Text >I agree to the Terms OF Service and Privacy Policy </Text>
           </Text>
           <Pressable style={styles.reg}>Register</Pressable>
@@ -110,7 +110,7 @@ export default function Screen() {
 
           </View>
         </View>
-      </footer>
+      </View>
 
     </SafeAreaView>
 
@@ -231,5 +231,9 @@ const styles = StyleSheet.create({
     gap:10,
 
   }
+  ,
+  checkbox: {
+    marginRight: 8,
+  },
 
 });

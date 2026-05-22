@@ -1,7 +1,7 @@
-import { Link } from "@react-navigation/native";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState } from "react";
 import {
+  Image,
   Pressable,
   SafeAreaView,
   StyleSheet,
@@ -14,20 +14,28 @@ import {
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("student");
 
+  const handleLogin = () => {
+    if (role === "lecturer") {
+      router.push("/(lecturer)/dashboard");
+      return;
+    }
+    router.push("/(student)/dashboard");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-
-      <header >
+      <View>
         <View style={styles.header}>
-          <img src="" alt="icon" />
-
-
+          <Image
+            source={{ uri: "https://placehold.co/48x48/png" }}
+            style={styles.logo}
+          />
           <Text style={styles.sm}>Smart Meet</Text>
         </View>
-      </header>
-      <main style={styles.main}>
+      </View>
+      <View style={styles.main}>
         <Text style={styles.txt2}>
           <Text style={styles.h2}>Welcome Back</Text>
           <Text style={styles.p1}>
@@ -35,8 +43,18 @@ export default function SignInScreen() {
           </Text>
         </Text>
         <View style={styles.but}>
-          <Pressable style={styles.but1}>Student</Pressable>
-          <Pressable style={styles.but2}>Lecturer</Pressable>
+          <Pressable
+            style={[styles.roleButton, role === "student" && styles.roleButtonActive]}
+            onPress={() => setRole("student")}
+          >
+            <Text style={styles.roleButtonText}>Student</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.roleButton, role === "lecturer" && styles.roleButtonActive]}
+            onPress={() => setRole("lecturer")}
+          >
+            <Text style={styles.roleButtonText}>Lecturer</Text>
+          </Pressable>
         </View>
         <Text style={styles.uemail}>university email</Text>
         <TextInput
@@ -61,7 +79,7 @@ export default function SignInScreen() {
           value={password}
           onChangeText={setPassword}
         />
-        <TouchableOpacity style={styles.button} onPress={() => { router.push("/dashboard") }}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.button1}> Login</Text>
         </TouchableOpacity>
 
@@ -71,9 +89,7 @@ export default function SignInScreen() {
             <Text> Register</Text>
           </TouchableOpacity>
         </Text>
-      </main>
-
-
+      </View>
     </SafeAreaView>
   );
 }
@@ -97,6 +113,11 @@ const styles = StyleSheet.create({
   },
   sm: {
     fontSize: 40,
+  },
+  logo: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
   },
   h2: {
     color: '#000',
@@ -123,20 +144,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 20,
   },
-  but1: {
+  roleButton: {
     padding: 7,
     width: "40%",
     borderRadius: 6,
-    backgroundColor: '#fff'
-
+    backgroundColor: "#efefef",
   },
-  but2: {
-    padding: 7,
-    borderRadius: 6,
-    width: "40%",
-    marginRight: 10,
-    backgroundColor: '#fff'
-
+  roleButtonActive: {
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#1f50ff",
+  },
+  roleButtonText: {
+    textAlign: "center",
+    fontWeight: "600",
   },
   txt2: {
     display: 'flex',
