@@ -29,7 +29,7 @@ export default function SignInScreen() {
       <View>
         <View style={styles.header}>
           <Image
-            source={{ uri: "https://placehold.co/48x48/png" }}
+         
             style={styles.logo}
           />
           <Text style={styles.sm}>Smart Meet</Text>
@@ -46,7 +46,7 @@ export default function SignInScreen() {
           <Pressable
             style={[styles.roleButton, role === "student" && styles.roleButtonActive]}
             onPress={() => setRole("student")}
-          >
+          >cd
             <Text style={styles.roleButtonText}>Student</Text>
           </Pressable>
           <Pressable
@@ -147,10 +147,10 @@ background: #FFFBEB;
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
+    margin: 20,
   },
   main: {
-    marginLeft: 10,
+    marginLeft: 20,
   },
   header: {
     textAlign: "left",
@@ -226,9 +226,10 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     height: 45,
     borderWidth: 2,
-    paddingHorizontal: 50,
+    paddingHorizontal: 30,
     margin: 10,
     marginBottom: 20,
+    width:'85%'
 
   },
   button: {
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#00f',
     padding: 15,
     borderRadius: 10,
-    width: '75%',
+    width: '80%',
     marginBottom: 20,
   },
   button1:{
@@ -246,19 +247,18 @@ const styles = StyleSheet.create({
   },
   link: {
     color: '#080844',
-    fontSize: 16.5,
+    fontSize: 16,
     marginRight: 50,
   },
   pass: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    justifyContent: 'space-between',
 
   },
   ft: {
-    marginLeft: 15,
-
+    marginRight:30,
     padding: 10,
     textAlign: 'center',
 

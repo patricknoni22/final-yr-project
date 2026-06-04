@@ -8,9 +8,13 @@ export default function Dashboard() {
     <ScrollView style={styles.container}>
       <header style={styles.header}>
         <View>
+<<<<<<< HEAD
           <Image 
             
           alt="unicap" />
+=======
+          <Image alt="unicap" />
+>>>>>>> 4555a0b51dbb45b9b8314dd8870d9a3def470ec1
 
           <Text style={styles.headertxt1}>SmartMeet</Text>
         </View>
@@ -190,8 +194,11 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "90%",
     borderRadius: 15,
+<<<<<<< HEAD
     borderLeftWidth: 5,
     borderLeftColor: '#1b1b58',
+=======
+>>>>>>> 4555a0b51dbb45b9b8314dd8870d9a3def470ec1
     marginTop: 20,
   },
   sec1h3: {

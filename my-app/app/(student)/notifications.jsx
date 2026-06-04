@@ -17,50 +17,50 @@ export default function Dashboard() {
           <Text>profile</Text>
         </View>
       </header>
-      <main style={styles.main}>
-
+      <View style={styles.main}>
+       
         {/* section 2 */}
 
-        <View style={styles.sec2div1}>
-          <Text style={styles.sec2txt1}>Upcoming Appointments</Text>
+          <View style={styles.sec2div1}>
+            <Text style={styles.sec2txt1}>Upcoming Appointments</Text>
+            
+          </View>
 
-        </View>
+          <View style={styles.sec2mdiv}>
+            <View style={styles.sec2div2}>
+             <View>
+               <Text>img</Text>
+             </View>
+              <View >
+                <Text style={styles.sec2prof}>Dr. Sarah Smith</Text>
+                <Text style={styles.sec2dept}>IFT dept : Room 402</Text>
+              </View>
+            </View>
+            <View style={styles.sec2div3}>
+              <Text style={styles.sec2date}>oct 12, 12:00pm </Text>
+              <Text style={styles.detail}> ◉Approved</Text>
+            </View>
+            <TouchableOpacity >
+              <Text style={styles.sec2btn}>details</Text></TouchableOpacity>
+          </View>
 
-        <View style={styles.sec2mdiv}>
-          <View style={styles.sec2div2}>
-            <View>
-              <Text>img</Text>
+          <View style={styles.sec2mdiv}>
+            <View style={styles.sec2div2}>
+              <View>
+                <Text>img</Text>
+              </View>
+              <View >
+                <Text style={styles.sec2prof}>Prof. James Wilson</Text>
+                <Text style={styles.sec2dept}>CSC dept : Room 105</Text>
+              </View>
             </View>
-            <View >
-              <Text style={styles.sec2prof}>Dr. Sarah Smith</Text>
-              <Text style={styles.sec2dept}>IFT dept : Room 402</Text>
+            <View style={styles.sec2div3}>
+              <Text style={styles.sec2date}>oct 15, 2:30pm </Text>
+              <Text style={styles.detail1}> ◉Pending</Text>
             </View>
+            <TouchableOpacity >
+              <Text style={styles.sec2btn}>details</Text></TouchableOpacity>
           </View>
-          <View style={styles.sec2div3}>
-            <Text style={styles.sec2date}>oct 12, 12:00pm </Text>
-            <Text style={styles.detail}> ◉Approved</Text>
-          </View>
-          <TouchableOpacity >
-            <Text style={styles.sec2btn}>details</Text></TouchableOpacity>
-        </View>
-
-        <View style={styles.sec2mdiv}>
-          <View style={styles.sec2div2}>
-            <View>
-              <Text>img</Text>
-            </View>
-            <View >
-              <Text style={styles.sec2prof}>Prof. James Wilson</Text>
-              <Text style={styles.sec2dept}>CSC dept : Room 105</Text>
-            </View>
-          </View>
-          <View style={styles.sec2div3}>
-            <Text style={styles.sec2date}>oct 15, 2:30pm </Text>
-            <Text style={styles.detail1}> ◉Pending</Text>
-          </View>
-          <TouchableOpacity >
-            <Text style={styles.sec2btn}>details</Text></TouchableOpacity>
-        </View>
 
         <View style={styles.sec2mdiv}>
           <View style={styles.sec2div2}>
@@ -78,12 +78,8 @@ export default function Dashboard() {
           </View>
           <TouchableOpacity >
             <Text style={styles.sec2btn}>details</Text></TouchableOpacity>
+          </View>
         </View>
-
-
-      </main>
-
-
     </ScrollView>
   );
 }
@@ -96,6 +92,7 @@ const styles = StyleSheet.create({
     padding: 20,
 
   },
+
   header: {
     display: "flex",
     flexDirection: 'row',
@@ -112,9 +109,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-
-  },
+    justifyContent: 'center'},
+ 
   prono: {
     display: 'flex',
     flexDirection: 'row',
@@ -139,10 +135,10 @@ const styles = StyleSheet.create({
 
   },
   sec2view: {
-    fontSize: 20,
-    fontWeight: 400,
-    color: '#06063b'
+     gap:10,
+    marginBottom: 20,
   },
+  
   sec2div2: {
     display: "flex",
     flexDirection: "row",
@@ -159,7 +155,10 @@ const styles = StyleSheet.create({
   },
   sec2dept: {
     fontSize: 17,
+    padding:10,
+    
   },
+ 
   sec2div3: {
     display: "flex",
     flexDirection: "row",
@@ -176,7 +175,12 @@ const styles = StyleSheet.create({
   detail: {
     fontSize: 17,
     color: 'rgb(15, 145, 15)',
+    padding:3,
+    width: "90%",
+    marginLeft:10,
   },
+
+  
   detail1: {
     fontSize: 17,
     color: '#ff8800',
@@ -204,7 +208,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#cac8c8",
     borderRadius: 10,
     marginBottom: 10,
+    marginLeft:25,
+    marginTop:5,
+    textAlign: 'center',
+   color:'#00f',
+    fontSize:18,
+    fontWeight:500,
+    textTransform:'capitalize'
   },
+ 
   sec2ft: {
     display: "flex",
     flexDirection: "row",
@@ -216,14 +228,15 @@ const styles = StyleSheet.create({
   sec2btn2: {
     width: "60%",
     padding: 10,
-
+    
     backgroundColor: "#00f",
     borderRadius: 10,
-    color: '#fff'
+    color:'#fff'
   },
   sec2btn3: {
     width: "50%",
     padding: 10,
+
     borderRadius: 10,
     borderStyle: 'solid',
     borderWidth: 2,
