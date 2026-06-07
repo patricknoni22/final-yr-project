@@ -6,23 +6,26 @@ import React from "react";
 export default function Dashboard() {
   return (
     <ScrollView style={styles.container}>
-      <header style={styles.header}>
-        <View>
-<<<<<<< HEAD
+      <View style={styles.header}>
+        <View style={styles.imgh}>
           <Image 
-            
-          alt="unicap" />
-=======
-          <Image alt="unicap" />
->>>>>>> 4555a0b51dbb45b9b8314dd8870d9a3def470ec1
-
+            source={require('./student-img/cap.jpg')} 
+            alt="unicap" 
+          />
           <Text style={styles.headertxt1}>SmartMeet</Text>
         </View>
         <View style={styles.prono}>
-          <Text>notification </Text>
-          <Text>profile</Text>
+          <Image
+            source={require('./student-img/bell.png')}
+            alt="unicap"
+          />
+          <Image
+            source={require('./student-img/profile.png')}
+            alt="unicap"
+            style={styles.img1}
+          />
         </View>
-      </header>
+      </View>
       <main style={styles.main}>
         {/* section 1 */}
         <section>
@@ -36,19 +39,49 @@ export default function Dashboard() {
             </Text>
           </View>
           <View style={styles.sec1div1}>
-            <Text style={styles.mar1}>img</Text>
+            <Image
+              source={require('./student-img/calendar.png')}
+              alt="unicap"
+              style={
+                styles.boximg
+              }
+            />
             <Text style={styles.sec1h3}>2</Text>
             <Text style={styles.mar1}>Upcoming Boookings</Text>
           </View>
           <View style={styles.sec1div1}>
-            <Text style={styles.mar1}>img</Text>
+            <Image
+              source={require('./student-img/rev.png')}
+              alt="unicap"
+              style={
+                styles.boximg
+              }
+            />
             <Text style={styles.sec1h3}>12</Text>
             <Text style={styles.mar1}>Past consultations</Text>
           </View>
           <View style={styles.sec1div2}>
             <Text style={styles.quick}>Quick Actions</Text>
-            <Text style={styles.sec1p2}>Find a lecturer</Text>
-            <Text style={styles.sec1p2}>Booking History</Text>
+            <View style={styles.sec1pf}>
+              <Text style={styles.sec1p2}>Find a lecturer</Text>
+              <Image
+                source={require('./student-img/arrow.png')}
+                alt="unicap"
+                style={
+                  styles.img2}
+              />
+            </View>
+            <View style={styles.sec1pd}>
+              <Text style={styles.sec1p2}>Booking History</Text>
+              <Image
+                source={require('./student-img/arrow.png')}
+                alt="unicap"
+                style={
+                  styles.img2}
+              />
+            </View>
+            
+         
           </View>
         </section>
         {/* section 2 */}
@@ -61,16 +94,31 @@ export default function Dashboard() {
           <View style={styles.sec2mdiv}>
             <View style={styles.sec2div2}>
              <View>
-               <Text>img</Text>
+                <Image
+                  source={require('./student-img/sarah.png')}
+                  alt="unicap"
+                  style={
+                    styles.img2}
+                />
+              
+               
              </View>
               <View >
                 <Text style={styles.sec2prof}>Dr. Sarah Smith</Text>
                 <Text style={styles.sec2dept}>IFT dept : Room 402</Text>
               </View>
             </View>
-            <View style={styles.sec2div3}>
-              <Text style={styles.sec2date}>oct 12, 12:00pm </Text>
-              <Text style={styles.detail}> ◉Approved</Text>
+            <View style={styles.sec2div31}>
+              <View style={styles.sec2div4}>
+                <Image
+                  source={require('./student-img/cal.png')}
+                  alt="unicap"
+
+                />
+                <Text style={styles.sec2date}>oct 12, 12:00pm </Text>
+              </View>
+
+              <View><Text style={styles.detail}> ◉Approved</Text></View>
             </View>
             <TouchableOpacity >
               <Text style={styles.sec2btn}>details</Text></TouchableOpacity>
@@ -79,7 +127,13 @@ export default function Dashboard() {
           <View style={styles.sec2mdiv}>
             <View style={styles.sec2div2}>
               <View>
-                <Text>img</Text>
+                <Image
+                  source={require('./student-img/james.png')}
+                  alt="unicap"
+                  style={
+                    styles.img3}
+                />
+
               </View>
               <View >
                 <Text style={styles.sec2prof}>Prof. James Wilson</Text>
@@ -87,7 +141,15 @@ export default function Dashboard() {
               </View>
             </View>
             <View style={styles.sec2div3}>
-              <Text style={styles.sec2date}>oct 15, 2:30pm </Text>
+              <View style={styles.sec2div4}> 
+                <Image
+                  source={require('./student-img/cal.png')}
+                  alt="unicap"
+                  
+                />
+
+                <Text style={styles.sec2date}>oct 15, 2:30pm </Text>
+              </View>
               <Text style={styles.detail1}> ◉Pending</Text>
             </View>
             <TouchableOpacity >
@@ -161,6 +223,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
 
   },
+  imgh:{
+    display: "flex",
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap:10,
+
+  },
   main: {
     marginLeft: 15,
     marginTop: 20,
@@ -170,7 +240,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    gap:10,
     
   },
   headertxt1: {
@@ -178,10 +249,15 @@ const styles = StyleSheet.create({
     color:'#00f',
     fontWeight:700,
   },
+  img1:{
+    borderRadius:'50%',
+    width:'40px',
+    height:'40px'
+  },
   sec1h2: {
     margin: 2,
     fontSize: 30,
-    fontWeight:600,
+    fontWeight:'700',
     color:'rgb(30, 30, 78)'
   },
   sec1p1: {
@@ -189,17 +265,18 @@ const styles = StyleSheet.create({
     marginTop:5,
     fontSize:17,
   },
+  boximg:{
+  marginLeft:10,
+  },
   sec1div1: {
     backgroundColor: "#f0d1d1",
     padding: 10,
     width: "90%",
     borderRadius: 15,
-<<<<<<< HEAD
     borderLeftWidth: 5,
     borderLeftColor: '#1b1b58',
-=======
->>>>>>> 4555a0b51dbb45b9b8314dd8870d9a3def470ec1
-    marginTop: 20,
+     marginTop: 20,
+     
   },
   sec1h3: {
     fontSize: 30,
@@ -215,7 +292,7 @@ const styles = StyleSheet.create({
   sec1div2: {
     backgroundColor: "#00F",
     padding: 10,
-    width: "90%",
+    width: "95%",
     borderRadius: 15,
     marginTop: 20,
   },
@@ -225,14 +302,37 @@ const styles = StyleSheet.create({
     padding:10,
 
   },
+
   sec1p2: {
-    padding: 6,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
     margin: 10,
     width: "60%",
     color:'#fff',
     fontSize:17,
   },
+  sec1pf:{
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+   justifyContent:'flex-start',
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    width:'70%',
+    margin:10
+    
+  },
+  sec1pd: {
+    display: "flex",
+    flexDirection: "row",
+    margin:10,
+    alignItems: "center",
+    justifyContent: 'flex-start',
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    width: '80%'
+  },
+
+  img2:{
+   marginLeft:-10,
+  },
+
   sec2div1: {
     display: "flex",
     flexDirection: "row",
@@ -275,11 +375,21 @@ const styles = StyleSheet.create({
   sec2div3: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding:3,
+    alignItems:'center',
+    justifyContent:'space-between',
+    padding:5,
     width: "90%",
     marginLeft:10,
+  },
+  sec2div31: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 5,
+    width: "90%",
+    marginLeft: 15,
+    gap:10,
   },
 
   sec2date:{
@@ -324,7 +434,6 @@ const styles = StyleSheet.create({
   sec2btn2: {
     width: "60%",
     padding: 10,
-
     backgroundColor: "#00f",
     borderRadius: 10,
     color:'#fff'
@@ -337,6 +446,17 @@ const styles = StyleSheet.create({
     borderWidth:2,
 
   },
+  img3:{
+    borderRadius:'50%',
+    marginLeft:-10
 
+  },
+  sec2div4:{
+ display:'flex',
+ flexDirection:'row',
+ alignItems:'center',
+ justifyContent:'flex-start',
+ gap:5,
+  },
 
 });

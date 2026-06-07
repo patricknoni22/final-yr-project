@@ -6,17 +6,26 @@ import React from "react";
 export default function Dashboard() {
   return (
     <ScrollView style={styles.container}>
-      <header style={styles.header}>
-        <View>
-          <Image alt="unicap" />
-
-          <Text style={styles.headertxt1}>SmartMeet</Text>
-        </View>
-        <View style={styles.prono}>
-          <Text>notification </Text>
-          <Text>profile</Text>
-        </View>
-      </header>
+      <View style={styles.header}>
+              <View style={styles.imgh}>
+                <Image 
+                  source={require('./student-img/cap.jpg')} 
+                  alt="unicap" 
+                />
+                <Text style={styles.headertxt1}>SmartMeet</Text>
+              </View>
+              <View style={styles.prono}>
+                <Image
+                  source={require('./student-img/bell.png')}
+                  alt="unicap"
+                />
+                <Image
+                  source={require('./student-img/profile.png')}
+                  alt="unicap"
+                  style={styles.img1}
+                />
+              </View>
+            </View>
       <View style={styles.main}>
        
         {/* section 2 */}
@@ -26,46 +35,82 @@ export default function Dashboard() {
             
           </View>
 
-          <View style={styles.sec2mdiv}>
-            <View style={styles.sec2div2}>
-             <View>
-               <Text>img</Text>
-             </View>
-              <View >
-                <Text style={styles.sec2prof}>Dr. Sarah Smith</Text>
-                <Text style={styles.sec2dept}>IFT dept : Room 402</Text>
-              </View>
-            </View>
-            <View style={styles.sec2div3}>
-              <Text style={styles.sec2date}>oct 12, 12:00pm </Text>
-              <Text style={styles.detail}> ◉Approved</Text>
-            </View>
-            <TouchableOpacity >
-              <Text style={styles.sec2btn}>details</Text></TouchableOpacity>
-          </View>
-
-          <View style={styles.sec2mdiv}>
-            <View style={styles.sec2div2}>
-              <View>
-                <Text>img</Text>
-              </View>
-              <View >
-                <Text style={styles.sec2prof}>Prof. James Wilson</Text>
-                <Text style={styles.sec2dept}>CSC dept : Room 105</Text>
-              </View>
-            </View>
-            <View style={styles.sec2div3}>
-              <Text style={styles.sec2date}>oct 15, 2:30pm </Text>
-              <Text style={styles.detail1}> ◉Pending</Text>
-            </View>
-            <TouchableOpacity >
-              <Text style={styles.sec2btn}>details</Text></TouchableOpacity>
-          </View>
+           <View style={styles.sec2mdiv}>
+                      <View style={styles.sec2div2}>
+                       <View>
+                          <Image
+                            source={require('./student-img/sarah.png')}
+                            alt="unicap"
+                            style={
+                              styles.img2}
+                          />
+                        
+                         
+                       </View>
+                        <View >
+                          <Text style={styles.sec2prof}>Dr. Sarah Smith</Text>
+                          <Text style={styles.sec2dept}>IFT dept : Room 402</Text>
+                        </View>
+                      </View>
+                      <View style={styles.sec2div31}>
+                        <View style={styles.sec2div4}>
+                          <Image
+                            source={require('./student-img/cal.png')}
+                            alt="unicap"
+          
+                          />
+                          <Text style={styles.sec2date}>oct 12, 12:00pm </Text>
+                        </View>
+          
+                        <View><Text style={styles.detail}> ◉Approved</Text></View>
+                      </View>
+                      <TouchableOpacity >
+                        <Text style={styles.sec2btn}>details</Text></TouchableOpacity>
+                    </View>
+          
+                    <View style={styles.sec2mdiv}>
+                      <View style={styles.sec2div2}>
+                        <View>
+                          <Image
+                            source={require('./student-img/james.png')}
+                            alt="unicap"
+                            style={
+                              styles.img3}
+                          />
+          
+                        </View>
+                        <View >
+                          <Text style={styles.sec2prof}>Prof. James Wilson</Text>
+                          <Text style={styles.sec2dept}>CSC dept : Room 105</Text>
+                        </View>
+                      </View>
+                      <View style={styles.sec2div3}>
+                        <View style={styles.sec2div4}> 
+                          <Image
+                            source={require('./student-img/cal.png')}
+                            alt="unicap"
+                            
+                          />
+          
+                          <Text style={styles.sec2date}>oct 15, 2:30pm </Text>
+                        </View>
+                        <Text style={styles.detail1}> ◉Pending</Text>
+                      </View>
+                      <TouchableOpacity >
+                        <Text style={styles.sec2btn}>details</Text></TouchableOpacity>
+                    </View>
+                    
 
         <View style={styles.sec2mdiv}>
           <View style={styles.sec2div2}>
             <View>
-              <Text>img</Text>
+              <Image
+                source={require('./student-img/james.png')}
+                alt="unicap"
+                style={
+                  styles.img3}
+              />
+             
             </View>
             <View >
               <Text style={styles.sec2prof}>Prof. Patrick Bond</Text>
@@ -116,7 +161,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
+    gap:10
 
+  },
+  imgh: {
+    display: "flex",
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+
+  },
+  img1: {
+    borderRadius: '50%',
+    width: '40px',
+    height: '40px'
   },
   sec2div1: {
     display: "flex",
@@ -168,6 +227,16 @@ const styles = StyleSheet.create({
     width: "90%",
     marginLeft: 10,
   },
+  sec2div31: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 5,
+    width: "90%",
+    marginLeft: 15,
+    gap: 10,
+  },
 
   sec2date: {
     fontSize: 19,
@@ -175,9 +244,6 @@ const styles = StyleSheet.create({
   detail: {
     fontSize: 17,
     color: 'rgb(15, 145, 15)',
-    padding:3,
-    width: "90%",
-    marginLeft:10,
   },
 
   
@@ -208,13 +274,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#cac8c8",
     borderRadius: 10,
     marginBottom: 10,
-    marginLeft:25,
     marginTop:5,
     textAlign: 'center',
    color:'#00f',
-    fontSize:18,
-    fontWeight:500,
-    textTransform:'capitalize'
+   
   },
  
   sec2ft: {
@@ -240,8 +303,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderStyle: 'solid',
     borderWidth: 2,
-
   },
 
+    img3: {
+      borderRadius: '50%',
+      marginLeft: -10
+
+    },
+    sec2div4: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      gap: 5,
+    }
 
 });

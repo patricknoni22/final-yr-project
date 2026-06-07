@@ -3,37 +3,51 @@ import { View, Text, ScrollView, StyleSheet, Image, Pressable } from "react-nati
 export default function Screen() {
   return (
     <ScrollView style={styles.container}>
-      <header style={styles.header}>
+      <View style={styles.header}>
         <View style={styles.header1}>
           <Image
-            source={require("./cap.png")}
+            source={require("./lect-img/cap.png")}
             alt="unicap" />
           <Text>
 
             <Text style={styles.h1}>SmartMeet</Text>
           </Text>
         </View>
-        <View>
-          <Text>notification </Text>
+        <View style={styles.imgdiv1}>
+          <Image
+            source={require("./lect-img/Button.png")}
+            alt="unicap" />
+          <Image
+            source={require("./lect-img/lec.png")}
+            alt="unicap" />
+
+          
         </View>
-      </header>
+      </View>
 
       <main style={styles.main}>
         <View>
           <View style={styles.sec1div}>
-            <Text>DASHBOARD</Text>
+            <Text style={{fontSize:17}}>DASHBOARD</Text>
             <Text style={styles.sec1h2}>Welcome back, Dr Chen</Text>
             <Text style={styles.div1par}>You have 4 new booking requests for this week.</Text>
           </View>
-          <p style={styles.pblue}>Manage Availability</p>
+          <View style={styles.pblue}>
+          <Image 
+              source={require('./lect-img/ava.png')}
+          alt="marker"/>
+            <p style={styles.pblue2}>Manage Availability</p>
+         </View>
         </View>
         {/* section 2 */}
         <View>
           <View style={styles.sec2divs}>
             <View style={styles.sec2div}>
-              <img alt="img" />
-              <Image alt="people" />
-              <Text>+12%</Text>
+              <Image
+                source={require('./lect-img/po.png')}
+               alt="people"
+               style={styles.img1} />
+              
             </View>
 
             <Text style={styles.sec2txt1}>Total students</Text>
@@ -42,8 +56,10 @@ export default function Screen() {
           {/* div 2  */}
           <View style={styles.sec2divs}>
             <View>
-              <img alt="clock" />
-              <Image alt="clock" />
+          
+              <Image 
+              source={require('./lect-img/cl.png')}
+              alt="clock" />
             </View>
 
             <Text style={styles.sec2txt1}>Hours Consulted</Text>
@@ -52,8 +68,9 @@ export default function Screen() {
           {/* div 3 */}
           <View style={styles.sec2divs}>
             <View>
-              <img alt="Star" />
-              <Image alt="star" />
+              <Image 
+                source={require('./lect-img/star.png')}
+              alt="star" />
             </View>
 
             <Text style={styles.sec2txt1}>Average rating</Text>
@@ -62,8 +79,9 @@ export default function Screen() {
           {/* div 4 */}
           <View style={styles.sec2divs}>
             <View>
-              <img alt="pending" />
-              <Image alt="pending" />
+              <Image 
+                source={require('./lect-img/review.png')}
+              alt="pending" />
             </View>
 
             <Text style={styles.sec2txt1}>Pending Reviews</Text>
@@ -86,8 +104,11 @@ export default function Screen() {
           <View style={styles.sec3div}>
             <View style={styles.sec3min}>
               <View>
-                <img alt="image" />
-                <Image alt="img"/>
+                <Image
+                  source={require('./lect-img/th.png')}
+                  alt="img of a person "
+                  style={styles.img3} />
+            
               </View>
 
               <View>
@@ -104,7 +125,10 @@ export default function Screen() {
           <View style={styles.sec3div}>
             <View style={styles.sec3min}>
               <View>
-                <img alt="image" />
+                <Image
+                  source={require('./lect-img/sa.png')}
+                  alt="img of a person "
+                  style={styles.img3} />
               </View>
 
               <View>
@@ -192,6 +216,7 @@ const styles = StyleSheet.create({
   },
   header: {
     display: "flex",
+    flexDirection:'row',
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 5,
@@ -220,18 +245,35 @@ const styles = StyleSheet.create({
     marginBottom:5,
 
     },
+    imgdiv1:{
+      display: "flex",
+      flexDirection: 'row',
+      alignItems: "center",
+      justifyContent: 'space-between',
+      gap:10
+    },
     div1par:{
     fontSize:17,
 
     },
   pblue: {
     backgroundColor: "#131352",
-    padding: 12,
-    color: "#fff",
-    width:'84%',
+    padding: 5,
+    marginTop:10,
     borderRadius: 10,
-    fontSize:17,
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'flex-start',
+    gap:10,  
+    paddingLeft: 15,
   },
+  pblue2: {
+    color: "#fff",
+    fontSize: 17,
+  },
+  
+  
   sec2divs: {
     backgroundColor: "#f0efef",
     padding: 20,
@@ -276,6 +318,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
    
   },
+  img3:{
+       borderRadius:'50%',
+
+  },
   sec3btn: {
     display: "flex",
      flexDirection:"row",
@@ -288,7 +334,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems: "center",
     justifyContent: "space-between",
-    gap: 2,
+    gap: 10,
     margin:10,
   },
   sec3btn1: {

@@ -29,6 +29,7 @@ export default function SignInScreen() {
       <View>
         <View style={styles.header}>
           <Image
+          source={require('./img-sign/Background.png')}
          
             style={styles.logo}
           />
@@ -46,7 +47,7 @@ export default function SignInScreen() {
           <Pressable
             style={[styles.roleButton, role === "student" && styles.roleButtonActive]}
             onPress={() => setRole("student")}
-          >cd
+          >
             <Text style={styles.roleButtonText}>Student</Text>
           </Pressable>
           <Pressable

@@ -5,22 +5,32 @@ import React from "react";
 
 export default function Screen() {
   const [text, setText] = React.useState('');
+  const [text1, setText1] = React.useState(''); 
+  const [text2, setText2] = React.useState('');
   const [password , setpassword] = React.useState('')
   return (
     <ScrollView style={styles.container}>
-      <header style={styles.header}>
+      <View style={styles.header}>
         <View style={styles.header1}>
-          <Text>img</Text>
-          <Image alt="unicap" />
+          
+          <Image 
+          source={require('./student-img/cap.jpg')}
+          alt="unicap" />
           <Text style={styles.headertxt1}>SmartMeet</Text>
         </View>
         <View style={styles.header1}>
-          <Text>search </Text>
-          <Text>Profile</Text>
+          <Image
+            source={require('./student-img/search.png')}
+            alt="unicap" />
+          <Image
+            source={require('./student-img/avatar.png')}
+            alt="unicap" />
+          
+          
 
         </View>
-      </header>
-      <main>
+      </View>
+      <View>
         <View >
 
           <Text style={styles.div1h1}>Settings</Text>
@@ -37,28 +47,35 @@ export default function Screen() {
         <View style={styles.div2}>
 
           <View style={styles.div2sec2}>
-            <Text>img</Text>
-            <Image alt="person icon" />
+           
+            <Image alt="person icon" 
+            source={require('./student-img/person.png')}/>
           
             <Text style={styles.text}>Profile Details</Text>
           </View>
 
           <View style={styles.div2sec2}>
-            <Text>img</Text>
-            <Image alt="bell icon" />
+           
+            <Image
+             source={require('./student-img/bell.png')}
+             alt="bell icon" />
             <Text>Notifications</Text>
           </View>
 
 
           <View style={styles.div2sec2}>
-            <Text>img</Text>
-            <Image alt="key icon" />
+         
+            <Image 
+              source={require('./student-img/key.png')}
+            alt="key icon" />
             <Text>Security</Text>
           </View>
 
           <View style={styles.div2sec2}>
-            <Text>img</Text>
-            <Image alt="eye icon" />
+          
+            <Image
+              source={require('./student-img/eye.png')}
+             alt="eye icon" />
             <Text>Privacy</Text>
           </View>
 
@@ -82,8 +99,8 @@ export default function Screen() {
             <Text>Student ID</Text>
             <TextInput
               placeholder="enter your reg no"
-              value={text}
-              onChangeText={setText}
+              value={text1}
+              onChangeText={setText1}
               style={styles.input}
             />
           </View>
@@ -92,8 +109,8 @@ export default function Screen() {
             <Text>Student Email</Text>
             <TextInput
               placeholder="enter your email"
-              value={text}
-              onChangeText={setText}
+              value={text2}
+              onChangeText={setText2}
               style={styles.input}
             />
           </View>
@@ -167,6 +184,10 @@ export default function Screen() {
           <Text style={styles.didv5h1}>Account Pivacy</Text>
 
           <View style={styles.div4main}>
+            <Image 
+            source={require('./student-img/search.png')}
+            alt="search"
+            />
             <Text style={styles.div4txt}>
               <Text style={styles.div4h2}>Search Visibility</Text>
 
@@ -179,38 +200,33 @@ export default function Screen() {
           </View>
 
 
-          <View style={styles.div4main}>
-            <Text style={styles.div4txt}>
-              <Text style={styles.div4h2}>Social Metadata</Text>
-
-              <Text style={styles.div4par}>Share academic achievement badges on linked social accounts.
-              </Text>
-
-            </Text>
-            <input type="checkbox" name="visibility" id="visibility" />
-
-          </View>
-
-          <View>
-            <Text style={styles.div6main}>
-              <Text style={styles.div6h1}>Danger Zone</Text>
+          <View style={styles.div6}>
+            <View style={styles.div6main}>
+              <View style={styles.div6min}>
+                <Image
+                source={require('./student-img/danger.png')
+                }
+                 alt="danger"/>
+                <Text style={styles.div6h1}>Danger Zone</Text>
+              </View>
+             
 
               <Text style={styles.div6par}>Permanetly delete your account and all associated data
               </Text>
 
-            <TouchableOpacity>
+              <TouchableOpacity>
                 <Text style={styles.div6link}>
                    Delete My Account
                 </Text>
-            </TouchableOpacity>
+              </TouchableOpacity>
 
-            </Text>
+            </View>
 
           </View>
 
         </View>
 
-      </main>
+      </View>
 
     </ScrollView>
   );
@@ -241,11 +257,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    gap: 5,
+    gap: 8,
   },
   headertxt1: {
     fontSize: 20,
-    color: '#00f',
+    color: 'rgb(33, 33, 95)',
     fontWeight: 700,
   },
   div1: {
@@ -264,7 +280,7 @@ const styles = StyleSheet.create({
   },
   div1par: {
     width: '50%',
-    fontSize: 16,
+    fontSize: 17,
 
 
   },
@@ -273,8 +289,9 @@ const styles = StyleSheet.create({
     color:'#fff',
     padding:8,
     fontSize: 17,
-    width: '25%',
+    width: '35%',
     borderRadius:15,
+    textAlign:'center'
   },
 
   div2:{
@@ -290,7 +307,9 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-evenly',
-    gap:5,
+    gap:10,
+    padding:9,
+
  
   },
   div3:{
@@ -359,6 +378,7 @@ const styles = StyleSheet.create({
    flexDirection:'row',
    alignItems:'center',
    justifyContent:'space-evenly',
+   gap:12,
   },
 
   div5:{
@@ -400,6 +420,16 @@ div6main:{
   alignItems: "flex-start",
   justifyContent: 'center',
   gap: 9,
+},
+div6min:{
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: "center",
+  justifyContent: 'flex-start',
+  gap:10
+},
+div6:{
+  marginTop: 20,
 },
 div6h1:{
   marginBottom: 10,
