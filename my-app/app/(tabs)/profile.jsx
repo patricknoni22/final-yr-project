@@ -67,7 +67,7 @@ export default function Screen() {
           </View>
 
           <Text style={styles.vdiv}>
-            <Text style={styles.vtxt}>Medieva Period</Text>
+            <Text style={styles.vtxt}>Medieval Period</Text>
             <Text style={styles.vtxt}> Cultural history</Text>
             <Text style={styles.vtxt}> Cultural history</Text>
             <TouchableOpacity>
@@ -84,7 +84,7 @@ export default function Screen() {
             <Image source={require('./lect-img/bib.png')} />
             <Text style={styles.txt3}>Biography</Text>
           </View>
-          <textarea name="txt" id="txt" placeholder="lorem2ddddddddddddddddddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffffffffffffffffffffddddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvddddddddddddddddddd"
+          <textarea name="txt" id="txt" placeholder="lorem"
           
           cols="20" rows="7"></textarea>
         </View>
@@ -180,11 +180,11 @@ const styles = StyleSheet.create({
   txt1: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#23135e',
+    color: '#003366',
     width: '50%'
   },
   div2: {
-    backgroundColor:'#23135e',
+    backgroundColor:'#001E40',
     borderRadius:12,
     padding:10,
     display:'flex',
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   },
 txt3:{
   fontSize: 20,
-  color: '#080947',
+  color: '#003366',
   fontWeight:'700',
 },
 p1:{
@@ -229,8 +229,8 @@ view2:{
   marginBottom: 20,
 },
 vtxt:{
- backgroundColor:'#b2dbee',
- color:"#00008b",
+  backgroundColor:'#D5E3FF',
+  color:"#1E3A8A",
  fontSize:17,
  padding:10,
  borderRadius:17,
@@ -261,7 +261,7 @@ gap:10
 txt4:{
   fontSize: 20,
   fontWeight: '700',
-  color: '#23135e',
+  color: '#003366',
   width: '50%'
 },
 view4:{
@@ -282,7 +282,7 @@ v2:{
 vtxt3:{
 fontSize:17,
 fontWeight:'700',
-color:'#160f42',
+  color:'#003366',
 
 },
 p4:{
@@ -317,13 +317,13 @@ span5:{
 t5:{
 fontSize:20,
 fontWeight:'700',
-color:'#f00'
+  color:'#BA1A1A'
 },
 t6:{
  fontSize:17,
 },
 btn6:{
-color:'#f00',
+  color:'#BA1A1A',
 fontSize:17,
 borderRadius:10,
 borderStyle:'solid',

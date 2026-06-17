@@ -21,23 +21,23 @@ export default function Screen() {
             source={require("./lect-img/lec.png")}
             alt="unicap" />
 
-          
+
         </View>
       </View>
 
       <main style={styles.main}>
         <View>
           <View style={styles.sec1div}>
-            <Text style={{fontSize:17}}>DASHBOARD</Text>
+            <Text style={{ fontSize: 17 }}>DASHBOARD</Text>
             <Text style={styles.sec1h2}>Welcome back, Dr Chen</Text>
             <Text style={styles.div1par}>You have 4 new booking requests for this week.</Text>
           </View>
           <View style={styles.pblue}>
-          <Image 
+            <Image
               source={require('./lect-img/ava.png')}
-          alt="marker"/>
+              alt="marker" />
             <p style={styles.pblue2}>Manage Availability</p>
-         </View>
+          </View>
         </View>
         {/* section 2 */}
         <View>
@@ -45,9 +45,9 @@ export default function Screen() {
             <View style={styles.sec2div}>
               <Image
                 source={require('./lect-img/po.png')}
-               alt="people"
-               style={styles.img1} />
-              
+                alt="people"
+                style={styles.img1} />
+
             </View>
 
             <Text style={styles.sec2txt1}>Total students</Text>
@@ -56,10 +56,10 @@ export default function Screen() {
           {/* div 2  */}
           <View style={styles.sec2divs}>
             <View>
-          
-              <Image 
-              source={require('./lect-img/cl.png')}
-              alt="clock" />
+
+              <Image
+                source={require('./lect-img/cl.png')}
+                alt="clock" />
             </View>
 
             <Text style={styles.sec2txt1}>Hours Consulted</Text>
@@ -68,9 +68,9 @@ export default function Screen() {
           {/* div 3 */}
           <View style={styles.sec2divs}>
             <View>
-              <Image 
+              <Image
                 source={require('./lect-img/star.png')}
-              alt="star" />
+                alt="star" />
             </View>
 
             <Text style={styles.sec2txt1}>Average rating</Text>
@@ -79,9 +79,9 @@ export default function Screen() {
           {/* div 4 */}
           <View style={styles.sec2divs}>
             <View>
-              <Image 
+              <Image
                 source={require('./lect-img/review.png')}
-              alt="pending" />
+                alt="pending" />
             </View>
 
             <Text style={styles.sec2txt1}>Pending Reviews</Text>
@@ -92,12 +92,12 @@ export default function Screen() {
         <View style={styles.main}>
           <View style={styles.sec3header}>
             <Text style={{
-              color:'#0c0c36',
-              fontSize:20,
-              fontWeight:'700'
+              color: '#003366',
+              fontSize: 20,
+              fontWeight: '700'
             }}>Booking Request</Text>
             <Text style={{
-              fontSize:17,
+              fontSize: 17,
             }}>View All</Text>
           </View>
           {/* div 2 */}
@@ -108,7 +108,7 @@ export default function Screen() {
                   source={require('./lect-img/th.png')}
                   alt="img of a person "
                   style={styles.img3} />
-            
+
               </View>
 
               <View>
@@ -208,29 +208,29 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: '#fff',
     padding: 20,
-    
+
   },
-  main:{
-     marginTop:30,
-     marginBottom:30,
+  main: {
+    marginTop: 30,
+    marginBottom: 30,
   },
   header: {
     display: "flex",
-    flexDirection:'row',
+    flexDirection: 'row',
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 5,
-    marginBottom:5,
+    marginBottom: 5,
   },
-  header1:{
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    gap:9,
+  header1: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 9,
   },
-  h1:{
+  h1: {
     fontSize: 20,
-    color: '#00f',
+    color: '#003366',
     fontWeight: 700,
 
   },
@@ -238,76 +238,76 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   sec1h2: {
-    color: "#141436",
-    fontSize:20,
-    fontWeight:'700',
-    marginTop:5,
-    marginBottom:5,
+    color: "#003366",
+    fontSize: 20,
+    fontWeight: '700',
+    marginTop: 5,
+    marginBottom: 5,
 
-    },
-    imgdiv1:{
-      display: "flex",
-      flexDirection: 'row',
-      alignItems: "center",
-      justifyContent: 'space-between',
-      gap:10
-    },
-    div1par:{
-    fontSize:17,
+  },
+  imgdiv1: {
+    display: "flex",
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: 'space-between',
+    gap: 10
+  },
+  div1par: {
+    fontSize: 17,
 
-    },
+  },
   pblue: {
-    backgroundColor: "#131352",
+    backgroundColor: "#001E40",
     padding: 5,
-    marginTop:10,
+    marginTop: 10,
     borderRadius: 10,
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'flex-start',
-    gap:10,  
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    gap: 10,
     paddingLeft: 15,
   },
   pblue2: {
     color: "#fff",
     fontSize: 17,
   },
-  
-  
+
+
   sec2divs: {
     backgroundColor: "#f0efef",
     padding: 20,
     width: "90%",
     borderRadius: 15,
     marginTop: 20,
-  
+
   },
   sec2div: {
     display: "flex",
-    flexDirection:'row',
+    flexDirection: 'row',
     alignItems: "center",
     justifyContent: "space-between",
-    gap:10,
+    gap: 10,
     padding: 10,
   },
-  sec2txt1:{
+  sec2txt1: {
     fontSize: 17,
-    marginTop:6,
-    marginBottom:6,
+    marginTop: 6,
+    marginBottom: 6,
   },
   sec2txt2: {
     fontSize: 30,
-    fontWeight:'700',
-    color:'#0c0c36'
+    fontWeight: '700',
+    color: '#003366'
   },
   sec3header: {
     display: "flex",
-    flexDirection:'row',
+    flexDirection: 'row',
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 30,
-    gap:20,
-    
+    gap: 20,
+
   },
 
   sec3div: {
@@ -316,33 +316,33 @@ const styles = StyleSheet.create({
     width: "90%",
     borderRadius: 15,
     marginTop: 20,
-   
+
   },
-  img3:{
-       borderRadius:'50%',
+  img3: {
+    borderRadius: '50%',
 
   },
   sec3btn: {
     display: "flex",
-     flexDirection:"row",
-     gap:5,
+    flexDirection: "row",
+    gap: 5,
     alignItems: "center",
     justifyContent: "space-around",
   },
   sec3min: {
     display: "flex",
-    flexDirection:'row',
+    flexDirection: 'row',
     alignItems: "center",
     justifyContent: "space-between",
     gap: 10,
-    margin:10,
+    margin: 10,
   },
   sec3btn1: {
     padding: 12,
     width: '40%',
     borderRadius: 12,
-    backgroundColor:'#101044',
-    color:'#fff',
+    backgroundColor: '#001E40',
+    color: '#fff',
     fontWeight: '500',
     fontSize: 17,
   },
@@ -350,30 +350,30 @@ const styles = StyleSheet.create({
     padding: 12,
     width: '40%',
     borderRadius: 12,
-    color: '#011096',
-    borderWidth:2,
-    borderStyle:'solid',
-    borderColor:'#000',
-    backgroundColor:'#fff',
-    fontWeight:'500',
-    fontSize:17,
+    color: '#1E3A8A',
+    borderWidth: 2,
+    borderStyle: 'solid',
+    borderColor: ' #1A1C1F',
+    backgroundColor: '#fff',
+    fontWeight: '500',
+    fontSize: 17,
   },
 
 
   sec3h1: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#101044'
+    color: '#003366'
   },
-  sec3par:{
-  width:'80%',
-  fontSize:17,
+  sec3par: {
+    width: '80%',
+    fontSize: 17,
 
   },
   sec4header: {
     marginTop: 20,
     display: "flex",
-    flexDirection:'row',
+    flexDirection: 'row',
     alignItems: "center",
     justifyContent: "space-around",
   },
@@ -383,10 +383,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     gap: 10,
-    marginTop:20,
-    borderLeftWidth:5,
-    borderLeftColor:'#0f0fa8',
-    marginBottom:20,
+    marginTop: 20,
+    borderLeftWidth: 5,
+    borderLeftColor: '#0f0fa8',
+    marginBottom: 20,
   },
   sec4h3: {
     fontSize: 20,
@@ -400,31 +400,32 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     width: "80%",
-    color: "#3232f1",
+    color: "#2563EB",
     backgroundColor: "#ebeaea",
     borderStyle: "solid",
-    textAlign:'center',
+    textAlign: 'center',
     fontSize: 18,
     borderRadius: 10,
   },
-  sec4txt1:{
-    fontSize:20,
-    fontWeight:'700',
-    color:'#131350',
+  sec4txt1: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#003366',
   },
   sec4txt2: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#010166',
-    backgroundColor:'#87a6df',
-    padding:10,
-    borderRadius:20,
+    color: '#003366',
+    backgroundColor: '#C3C6D1',
+    padding: 10,
+    borderRadius: 20,
   },
- 
-  sec4time:{
-  fontSize:17,
+
+  sec4time: {
+    fontSize: 17,
   },
 
 
 
 });
+

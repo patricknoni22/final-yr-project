@@ -261,8 +261,8 @@ const styles = StyleSheet.create({
   },
   headertxt1: {
     fontSize: 20,
-    color: 'rgb(33, 33, 95)',
-    fontWeight: 700,
+    color: '#003366',
+    fontWeight: '700',
   },
   div1: {
     display: 'flex',
@@ -275,17 +275,15 @@ const styles = StyleSheet.create({
   },
   div1h1: {
     fontSize: 30,
-    color: 'rgb(27, 27, 117)',
-    fontWeight: '600',
+    color: '#003366',
+    fontWeight: '700',
   },
   div1par: {
     width: '50%',
     fontSize: 17,
-
-
   },
   btn1: {
-    backgroundColor: '#00F',
+    backgroundColor: '#001E40',
     color:'#fff',
     padding:8,
     fontSize: 17,
@@ -326,7 +324,7 @@ const styles = StyleSheet.create({
     marginBottom:20,
     marginTop:20,
     fontSize:30,
-    color:'#15153b',
+    color:'#003366',
     fontWeight: '600',
 
   },
@@ -352,7 +350,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     fontSize: 30,
-    color: '#15153b',
+    color: '#003366',
     width:'60%',
     fontWeight: '600',
   },
@@ -396,7 +394,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 30,
     fontWeight:'600',
-    color: '#15153b',
+    color: '#003366',
   },
 div5sm:{
   display: 'flex',
@@ -408,8 +406,8 @@ div5sm:{
 },
 div5btn:{
 marginTop:10,
-color:'#141438',
-backgroundColor:'#b4b4b4',
+  color:'#003366',
+  backgroundColor:'#C3C6D180',
 padding:10,
 borderRadius:10,
 fontSize:17,
@@ -435,17 +433,17 @@ div6h1:{
   marginBottom: 10,
   marginTop: 10,
   fontSize: 20,
-  color: '#ff0000',
+  color: '#BA1A1A',
   fontWeight: '600',
 },
 div6par:{
   width: '80%',
   fontSize: 17,
-  color: '#ff0000',
+  color: '#BA1A1A',
 },
 div6link:{
   fontSize: 17,
-  color: '#ff0000',
+  color: '#BA1A1A',
   textDecorationLine:'underline',
 
 },

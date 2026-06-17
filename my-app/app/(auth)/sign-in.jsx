@@ -82,66 +82,17 @@ export default function SignInScreen() {
         />
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.button1}> Login</Text>
+          <Image source={require('./img-sign/log.png')}/>
         </TouchableOpacity>
 
         <Text style={styles.ft}>
           <Text>Don t have an account? </Text>
           <TouchableOpacity onPress={() => { router.push("/sign-up") }}>
-            <Text> Register</Text>
+            <Text style={{ color:'#1E3A8A'}}> Register</Text>
           </TouchableOpacity>
         </Text>
       </View>
-      {/* background: #FFFFFF;
-background: #003366;
-background: #001E40;
-background: #43474F;
-background: #C3C6D1;
-background: #5A5F62;
-background: #94A3B8;
-background: #1A1C1F;
-background: #737780;
-background: #E0E4E8;
-background: #E2E8F0;
-background: #5E6367;
-background: #64748B;
-background: #6B7280;
-background: #1E3A8A;
-background: #F9F9FE;
-background: #475569;
-background: #D5E3FF;
-background: #EEEDF2;
-background: #F1F5F9;
-background: #F8FAFC;
-background: #E2E2E7;
-background: #EFF6FF;
-background: #F4F3F8;
-background: #15803D;
-background: #22C55E;
-background: #BA1A1A;
-background: #D1D5DB;
-background: #DCFCE7;
-background: #FBBF24;
-background: #FFFFFFF2;
-background: #FFFFFF01;
-background: #4ADE80;
-background: #DCE0E4;
-background: #F0FDF4;
-background: #FFDBCA;
-background: #FFFFFF1A;
-background: #16A34A;
-background: #2563EB;
-background: #592300;
-background: #93000A;
-background: #B45309;
-background: #C3C6D180;
-background: #D8885C;
-background: #DFE3E7;
-background: #F59E0B;
-background: #FEF3C7;
-background: #FFDAD6;
-background: #FFDAD633;
-background: #FFFBEB;
- */}
+     
     </SafeAreaView>
   );
 }
@@ -186,8 +137,8 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 30,
     marginBottom: 20,
-    backgroundColor: "#dbd4d4",
-    padding: 10,
+    backgroundColor: "#adaeaf",
+    padding: 5,
     display: "flex",
     flexDirection: 'row',
     alignItems: "center",
@@ -235,11 +186,16 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 10,
-    backgroundColor: '#00f',
+    backgroundColor: '#001E40',
     padding: 15,
     borderRadius: 10,
     width: '80%',
     marginBottom: 20,
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
+    gap:8,
   },
   button1:{
     color: '#fff',
@@ -247,7 +203,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   link: {
-    color: '#080844',
+    color: '#001E40',
     fontSize: 16,
     marginRight: 50,
   },
@@ -268,4 +224,3 @@ const styles = StyleSheet.create({
 
 
 });
-

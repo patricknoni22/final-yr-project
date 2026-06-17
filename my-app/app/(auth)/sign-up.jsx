@@ -1,4 +1,5 @@
 import {
+
   Pressable,
 
   StyleSheet,
@@ -6,7 +7,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  ScrollView
+  ScrollView,
+  Image
 } from "react-native";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -115,7 +117,10 @@ export default function Screen() {
             <Text style={styles.checkbox}><input type="checkbox" name="terms" id="terms" checked /></Text>
             <Text style={styles.term1}>I agree to the Terms OF Service and Privacy Policy </Text>
           </Text>
-          <Pressable style={styles.reg}>Register</Pressable>
+          <Pressable style={styles.reg}>
+            <Text style={styles.retxt}>  Register</Text>
+            <Image source={require("./img-sign/Container (5).png")} alt="arrow"/>
+            </Pressable>
           <View style={styles.ftp}>
             <Text style={styles.txt}>Already have an account?</Text>
 
@@ -147,27 +152,28 @@ const styles = StyleSheet.create({
   },
   headtx: {
     fontSize: 20,
-    color: "#00f",
-    fontWeight: 600,
+    color: "#001E40",
+    fontWeight: "700",
     padding: 5,
   },
   but: {
 
     marginTop: 10,
     marginBottom: 20,
-    padding: 1,
+    padding: 7,
     display: "flex",
     flexDirection: 'row',
     alignItems: "center",
     justifyContent: 'space-evenly',
-    width: "90%",
+    width: "120%",
     gap: 10,
+    paddingRight:20,
     borderRadius: 10,
-
+    backgroundColor:'#6B7280'
   },
   roleButton: {
     padding: 7,
-    width: "60%",
+    width: "50%",
     borderRadius: 6,
     backgroundColor: "#efefef",
 
@@ -176,11 +182,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderWidth: 1,
     borderColor: "#1938aa",
+  
   },
   roleButtonText: {
     textAlign: "center",
     fontWeight: "600",
     fontSize: 17,
+  },
+  roleButtonText1: {
+    textAlign: "center",
+    fontWeight: "600",
+    fontSize: 17,
+   
   },
   input: {
     borderRadius: 10,
@@ -253,20 +266,30 @@ const styles = StyleSheet.create({
 
   },
   reg: {
-    backgroundColor: '#00f',
+    backgroundColor: '#001E40',
     padding: 8,
     borderRadius: 6,
-    color: '#fff',
+    
     width: '80%',
-    textAlign: 'center',
+   
     marginBottom:10,
     marginLeft:40,
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
+    gap:5
 
   },
+  retxt:{
+    color: '#fff',
+    fontSize:17
+  },
+
   ftp: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent:'space-around',
+    justifyContent:'space-between',
     alignItems: 'center',
     gap: 3,
 
@@ -282,13 +305,13 @@ const styles = StyleSheet.create({
 
   },
    txt:{
-fontSize:17
+fontSize:16
    },
    log:{
      textTransform:'uppercase',
-     fontSize:17,
+     fontSize:16,
        textDecorationLine:'underline',
-       color:'rgb(23, 23, 78)',
+     color:'#1E3A8A',
        fontWeight:'600'
        
     },

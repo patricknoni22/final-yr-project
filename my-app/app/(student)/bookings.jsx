@@ -63,7 +63,10 @@ export default function Screen() {
             </View>
 
             
-            <TouchableOpacity style={styles.pressbtn}>View Profile</TouchableOpacity>
+            <TouchableOpacity style={styles.pressbtn}>
+              <Text style={styles.prestxt}>View Profile</Text>
+              <Image source={require('./student-img/arrow.png')} alt="arrow" />
+            </TouchableOpacity>
           </View>
           {/* div 2 */}
           <View style={styles.view1}>
@@ -82,7 +85,10 @@ export default function Screen() {
             </View>
 
             
-            <TouchableOpacity style={styles.pressbtn}>View Profile</TouchableOpacity>
+            <TouchableOpacity style={styles.pressbtn}><Text style={styles.prestxt}>View Profile</Text>
+            <Image source={require('./student-img/arrow.png')} alt="arrow"/>
+
+            </TouchableOpacity>
           </View>
 
           {/* div 3 */}
@@ -102,7 +108,10 @@ export default function Screen() {
             </View>
 
             
-            <TouchableOpacity style={styles.pressbtn}>View Profile</TouchableOpacity>
+            <TouchableOpacity style={styles.pressbtn}>
+              <Text style={styles.prestxt}>View Profile</Text>
+              <Image source={require('./student-img/arrow.png')} alt="arrow" />
+            </TouchableOpacity>
           </View>
         </section>
       </main>
@@ -123,7 +132,6 @@ const styles = StyleSheet.create({
   },
   text:{
    fontSize:16,
-
   },
   headerImage: {
     display: "flex",
@@ -142,12 +150,12 @@ const styles = StyleSheet.create({
   },
   main: {
     width: '90%',
-    marginLeft: 15,
     padding: 5,
+    paddingLeft:20
   },
   headertxt1: {
     fontSize: 20,
-    color: '#00f',
+    color: '#001E40',
     fontWeight: '700',
   },
   prono: {
@@ -166,7 +174,7 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
   },
   btn: {
-    backgroundColor: '#c5c2c2',
+    backgroundColor: '#C3C6D180',
     padding: 10,
     borderRadius: 10,
     fontSize: 17,},
@@ -182,7 +190,7 @@ const styles = StyleSheet.create({
 
   },
   all: {
-    backgroundColor: '#0202ff',
+  backgroundColor: '#001E40',
   fontSize: 17,
   padding:8,
   borderRadius:10,
@@ -196,12 +204,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   ava: {
-    color: 'rgb(5, 5, 5)',
-    backgroundColor: '#0f0',
+    color: '#000',
+    backgroundColor: '#4ADE80',
     borderRadius: 30,
     textAlign: 'center',
-    fontSize: 17,
-    padding: 8,
+    fontSize: 15,
+    padding: 3,
     margin: 7,
 
   },
@@ -215,16 +223,23 @@ const styles = StyleSheet.create({
 
   },
   pressbtn: {
-    backgroundColor: '#00f',
-    color: '#fff',
-    textAlign: 'center',
+    backgroundColor: '#001E40',
+    
     width: '80%',
     marginLeft: 30,
     padding: 8,
     borderRadius: 10,
-    fontSize: 17,
+  
     marginTop:10,
-
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
+    gap:10,
+  },
+  prestxt:{
+    color: '#fff',
+    fontSize: 17,
   },
   inputs: {
     borderRadius: 10,

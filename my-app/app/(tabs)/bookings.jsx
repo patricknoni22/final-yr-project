@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   },
   h1: {
     fontSize: 20,
-    color: 'rgb(26, 26, 90)',
+    color: '#003366',
     fontWeight: '700',
 
   },
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
   txt1:{
     fontSize:20,
     fontWeight:'700',
-    color:'#10103d',
+    color:'#003366',
 
   },
   txt2:{

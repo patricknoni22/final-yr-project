@@ -166,7 +166,7 @@ export default function Dashboard() {
               marginTop: 50,
               borderRadius:1,
               borderStyle:'solid',
-              borderColor:'#dd9191',
+              borderColor:'#f8a3a3',
               borderWidth:4,
               padding:10,
               width:'95%'
@@ -175,8 +175,8 @@ export default function Dashboard() {
             <Text 
             style={{ 
               fontSize:20,
-              fontWeight:500,
-              color:"#070735",
+              fontWeight:'700',
+                color:"#001E40",
               paddingLeft:20,
               padding:10,
              }}>
@@ -211,7 +211,7 @@ export default function Dashboard() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     padding: 20,
    
   },
@@ -221,6 +221,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 10,
+    backgroundColor: '#ffffff',
+    padding:3,
+
 
   },
   imgh:{
@@ -246,7 +249,7 @@ const styles = StyleSheet.create({
   },
   headertxt1: {
     fontSize: 20,
-    color:'#00f',
+    color:'#003366',
     fontWeight:700,
   },
   img1:{
@@ -258,7 +261,7 @@ const styles = StyleSheet.create({
     margin: 2,
     fontSize: 30,
     fontWeight:'700',
-    color:'rgb(30, 30, 78)'
+    color:'#001E40'
   },
   sec1p1: {
     width: "90%",
@@ -269,12 +272,12 @@ const styles = StyleSheet.create({
   marginLeft:10,
   },
   sec1div1: {
-    backgroundColor: "#f0d1d1",
+    backgroundColor: "#F1F5F9",
     padding: 10,
     width: "90%",
     borderRadius: 15,
     borderLeftWidth: 5,
-    borderLeftColor: '#1b1b58',
+    borderLeftColor: '#001E40',
      marginTop: 20,
      
   },
@@ -290,7 +293,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   sec1div2: {
-    backgroundColor: "#00F",
+    backgroundColor: "#001E40",
     padding: 10,
     width: "95%",
     borderRadius: 15,
@@ -314,7 +317,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
    justifyContent:'flex-start',
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    backgroundColor: "#C3C6D180",
     width:'70%',
     margin:10
     
@@ -325,7 +328,7 @@ const styles = StyleSheet.create({
     margin:10,
     alignItems: "center",
     justifyContent: 'flex-start',
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    backgroundColor: "#C3C6D180",
     width: '80%'
   },
 
@@ -347,13 +350,13 @@ const styles = StyleSheet.create({
     fontWeight:700,
     marginBottom:10,
     width: '50%',
-    color:'#00f'
+    color:'#001E40'
      
   },
   sec2view:{
     fontSize: 20,
     fontWeight: 400,
-    color: '#06063b'
+    color: '#003366',
   },
   sec2div2: {
     display: "flex",
@@ -366,8 +369,8 @@ const styles = StyleSheet.create({
   },
   sec2prof:{
    fontSize:20,
-   fontWeight:600,
-   color:'#00f',
+   fontWeight:'700',
+    color:'#001E40',
   },
   sec2dept:{
    fontSize:17,
@@ -397,7 +400,7 @@ const styles = StyleSheet.create({
   },
   detail:{
     fontSize:17,
-    color:'rgb(15, 145, 15)',
+    color:'#22C55E',
   },
   detail1: {
     fontSize: 17,
@@ -405,7 +408,7 @@ const styles = StyleSheet.create({
   },
   sec2btn: {
     width: "80%",
-    backgroundColor: '#f0e9e9',
+    backgroundColor: '#F8FAFC',
     padding: 10,
     marginLeft:25,
     marginTop:5,
@@ -414,12 +417,13 @@ const styles = StyleSheet.create({
     color:'#00f',
     fontSize:18,
     fontWeight:500,
-    textTransform:'capitalize'
+    textTransform:'capitalize',
+    borderRadius:10,
   },
   sec2mdiv: {
     width: "95%",
     padding:10,
-    backgroundColor:"#cac8c8",
+    backgroundColor:"#d6d7dd80",
     borderRadius:10,
     marginBottom:10,
   },
@@ -434,9 +438,9 @@ const styles = StyleSheet.create({
   sec2btn2: {
     width: "60%",
     padding: 10,
-    backgroundColor: "#00f",
+    backgroundColor: "#001E40",
     borderRadius: 10,
-    color:'#fff'
+    color:'#FFFFFF'
   },
   sec2btn3: {
     width: "50%",

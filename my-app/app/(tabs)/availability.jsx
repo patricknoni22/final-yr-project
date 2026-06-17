@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
   },
   h1: {
     fontSize: 20,
-    color: '#00f',
-    fontWeight: 700,
+    color: '#003366',
+    fontWeight:'700',
 
   },
 
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     gap: 10,
     marginTop: 20,
     borderLeftWidth: 5,
-    borderLeftColor: '#0f0fa8',
+    borderLeftColor: '#001E40',
     marginBottom: 20,
   },
   sec4h3: {
@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
   sec4txt1: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#131350',
+    color: '#003366',
   },
   sec4txt2: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#010166',
+    color: 'v',
     backgroundColor: '#87a6df',
     padding: 10,
     borderRadius: 20,

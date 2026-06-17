@@ -147,14 +147,15 @@ const styles = StyleSheet.create({
   },
   headertxt1: {
     fontSize: 20,
-    color: '#00f',
-    fontWeight: 700,
+    color: '#1E3A8A',
+    fontWeight: '700',
   },
   main: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center'},
+    justifyContent: 'center'
+  },
  
   prono: {
     display: 'flex',
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 700,
     marginBottom: 10,
-    color: '#00f'
+    color: '#003366'
 
   },
   sec2view: {
@@ -209,8 +210,8 @@ const styles = StyleSheet.create({
   },
   sec2prof: {
     fontSize: 20,
-    fontWeight: 600,
-    color: '#00f',
+    fontWeight: '700',
+    color: '#1E3A8A',
   },
   sec2dept: {
     fontSize: 17,
@@ -243,21 +244,21 @@ const styles = StyleSheet.create({
   },
   detail: {
     fontSize: 17,
-    color: 'rgb(15, 145, 15)',
+    color: '#4ADE80',
   },
 
   
   detail1: {
     fontSize: 17,
-    color: '#ff8800',
+    color: '#FBBF24',
   },
   detail2: {
     fontSize: 17,
-    color: '#ff0000',
+    color: '#BA1A1A',
   },
   sec2btn: {
     width: "80%",
-    backgroundColor: '#f0e9e9',
+    backgroundColor: '#F1F5F9',
     padding: 10,
     marginLeft: 25,
     marginTop: 5,
@@ -266,12 +267,13 @@ const styles = StyleSheet.create({
     color: '#00f',
     fontSize: 18,
     fontWeight: 500,
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
+    borderRadius:10,
   },
   sec2mdiv: {
     width: "95%",
     padding: 10,
-    backgroundColor: "#cac8c8",
+    backgroundColor: "#C3C6D180",
     borderRadius: 10,
     marginBottom: 10,
     marginTop:5,
@@ -292,7 +294,7 @@ const styles = StyleSheet.create({
     width: "60%",
     padding: 10,
     
-    backgroundColor: "#00f",
+    backgroundColor: "#1E3A8A",
     borderRadius: 10,
     color:'#fff'
   },
@@ -319,3 +321,4 @@ const styles = StyleSheet.create({
     }
 
 });
+
