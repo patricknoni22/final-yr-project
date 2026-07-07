@@ -29,7 +29,8 @@ export default function SignInScreen() {
       <View>
         <View style={styles.header}>
           <Image
-            source={{ uri: "https://placehold.co/48x48/png" }}
+          source={require('./img-sign/Background.png')}
+         
             style={styles.logo}
           />
           <Text style={styles.sm}>Smart Meet</Text>
@@ -81,25 +82,27 @@ export default function SignInScreen() {
         />
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.button1}> Login</Text>
+          <Image source={require('./img-sign/log.png')}/>
         </TouchableOpacity>
 
         <Text style={styles.ft}>
           <Text>Don t have an account? </Text>
           <TouchableOpacity onPress={() => { router.push("/sign-up") }}>
-            <Text> Register</Text>
+            <Text style={{ color:'#1E3A8A'}}> Register</Text>
           </TouchableOpacity>
         </Text>
       </View>
+     
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
+    margin: 20,
   },
   main: {
-    marginLeft: 10,
+    marginLeft: 20,
   },
   header: {
     textAlign: "left",
@@ -134,8 +137,8 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 30,
     marginBottom: 20,
-    backgroundColor: "#dbd4d4",
-    padding: 10,
+    backgroundColor: "#adaeaf",
+    padding: 5,
     display: "flex",
     flexDirection: 'row',
     alignItems: "center",
@@ -175,18 +178,24 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     height: 45,
     borderWidth: 2,
-    paddingHorizontal: 50,
+    paddingHorizontal: 30,
     margin: 10,
     marginBottom: 20,
+    width:'85%'
 
   },
   button: {
     margin: 10,
-    backgroundColor: '#00f',
+    backgroundColor: '#001E40',
     padding: 15,
     borderRadius: 10,
-    width: '75%',
+    width: '80%',
     marginBottom: 20,
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'center',
+    gap:8,
   },
   button1:{
     color: '#fff',
@@ -194,20 +203,19 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   link: {
-    color: '#080844',
-    fontSize: 16.5,
+    color: '#001E40',
+    fontSize: 16,
     marginRight: 50,
   },
   pass: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    justifyContent: 'space-between',
 
   },
   ft: {
-    marginLeft: 15,
-
+    marginRight:30,
     padding: 10,
     textAlign: 'center',
 
@@ -216,4 +224,3 @@ const styles = StyleSheet.create({
 
 
 });
-
