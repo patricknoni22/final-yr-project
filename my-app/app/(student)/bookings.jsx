@@ -1,272 +1,116 @@
-import { Image, ScrollView, Text, View, StyleSheet, TouchableOpacity,TextInput } from "react-native";
-import React from "react";
+import { useState } from "react";
+import { useRouter } from "expo-router";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import BookingCard from "../../src/components/booking/BookingCard";
+import BookingFilterTabs from "../../src/components/booking/BookingFilterTabs";
+import Text from "../../src/components/InterText";
+import NavHeader from "../../src/components/NavHeader";
 
+const filters = ["All", "Upcoming", "Completed"];
+const bookings = [
+  {
+    id: "sarah",
+    name: "Dr. Sarah Smith",
+    department: "Information Technology",
+    date: "Oct 12, 2026",
+    time: "12:00 PM",
+    location: "Room 402",
+    status: "Approved",
+    group: "Upcoming",
+    image: require("./student-img/sarah.png"),
+  },
+  {
+    id: "james",
+    name: "Prof. James Wilson",
+    department: "Computer Science",
+    date: "Oct 15, 2026",
+    time: "2:30 PM",
+    location: "Room 105",
+    status: "Pending",
+    group: "Upcoming",
+    image: require("./student-img/james.png"),
+  },
+  {
+    id: "patrick",
+    name: "Prof. Patrick Bond",
+    department: "Information Technology",
+    date: "Sep 28, 2026",
+    time: "10:00 AM",
+    location: "Admin Office",
+    status: "Completed",
+    group: "Completed",
+    image: require("./student-img/james.png"),
+  },
+];
 
+export default function StudentBookingsScreen() {
+  const router = useRouter();
+  const [activeFilter, setActiveFilter] = useState("All");
+  const visibleBookings = bookings.filter(
+    (item) => activeFilter === "All" || item.group === activeFilter,
+  );
 
-export default function Screen() {
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.headerImage}>
-        <View style={styles.hd}>
-          <Image 
-            source={require('./student-img/cap.jpg')}
-          alt="unicap" />
-          <Text style={styles.headertxt1}>SmartMeet</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <NavHeader />
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={styles.title}>Bookings</Text>
+        <Text style={styles.subtitle}>
+          Track and manage your consultation appointments.
+        </Text>
+        <View style={styles.filters}>
+          <BookingFilterTabs
+            filters={filters}
+            activeFilter={activeFilter}
+            onChange={setActiveFilter}
+          />
         </View>
-        <View style={styles.prono}>
-          <Image
-            source={require('./student-img/bell.png')}
-            alt="unicap" />
+        <View style={styles.list}>
+          {visibleBookings.map((booking) => (
+            <BookingCard
+              key={booking.id}
+              booking={booking}
+              onPress={() => router.push({
+                pathname: "/(student)/booking-details/[bookingId]",
+                params: {
+                  bookingId: booking.id,
+                  name: booking.name,
+                  department: booking.department,
+                  date: booking.date,
+                  time: booking.time,
+                  location: booking.location,
+                  status: booking.status,
+                },
+              })}
+            />
+          ))}
         </View>
-      </View>
-      <main style={styles.main}>
-        <section>
-          <View style={styles.in}>
-            <Image
-              source={require('./student-img/search.png')}
-              alt="unicap" 
-              style={styles.img1}
-              />
-
-            <TextInput
-                     style={styles.inputs}
-                     placeholder="search name or subject "
-                     autoCapitalize="none"
-                     keyboardType="email-address"
-                     
-                   />
-          </View>
-          <View style={styles.dept}>
-            <Text style={styles.text}> Departments</Text>
-            <Text style={styles.text}>Clear all</Text>
-          </View>
-
-          <View style={styles.dept}>
-            <Text style={styles.all}>All</Text>
-            <Text style={styles.btn}>Lecturer</Text>
-            <Text style={styles.btn}>Admin</Text>
-          </View>
-        </section>
-        <section>
-          <View style={styles.view1}>
-            <View style={styles.div1}>
-              <View>
-                <Image alt="prof img" 
-                source={require('./student-img/prof1.png')}
-                />
-              </View>
-              <View>
-                <Text style={styles.ava}>Available Today</Text>
-                <Text style={styles.text}>Prof. James Wilson</Text>
-                <Text style={styles.text}>Computer Science</Text>
-              </View>
-            </View>
-
-            
-            <TouchableOpacity style={styles.pressbtn}>
-              <Text style={styles.prestxt}>View Profile</Text>
-              <Image source={require('./student-img/arrow.png')} alt="arrow" />
-            </TouchableOpacity>
-          </View>
-          {/* div 2 */}
-          <View style={styles.view1}>
-            <View style={styles.div1}>
-              <View>
-                <Image alt="prof img"
-                  source={require('./student-img/prof2.png')}
-                />
-                
-              </View>
-              <View>
-                <Text style={styles.ava}>Available Tomorrow</Text>
-                <Text style={styles.text}>Dr. Elena Rodrigues</Text>
-                <Text style={styles.text}>Information Techonolgy</Text>
-              </View>
-            </View>
-
-            
-            <TouchableOpacity style={styles.pressbtn}><Text style={styles.prestxt}>View Profile</Text>
-            <Image source={require('./student-img/arrow.png')} alt="arrow"/>
-
-            </TouchableOpacity>
-          </View>
-
-          {/* div 3 */}
-          <View style={styles.view1}>
-            <View style={styles.div1}>
-              <View>
-                <Image alt="prof img"
-                  source={require('./student-img/prof3.png')}
-                />
-              
-              </View>
-              <View>
-                <Text style={styles.ava}>Available Today</Text>
-                <Text style={styles.text}>Prof. Sarah John</Text>
-                <Text style={styles.text}>Networking</Text>
-              </View>
-            </View>
-
-            
-            <TouchableOpacity style={styles.pressbtn}>
-              <Text style={styles.prestxt}>View Profile</Text>
-              <Image source={require('./student-img/arrow.png')} alt="arrow" />
-            </TouchableOpacity>
-          </View>
-        </section>
-      </main>
-    </ScrollView>
-
-
-
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
-
-
-
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    backgroundColor: '#fff',
+  safeArea: { flex: 1, backgroundColor: "#F6F8FB" },
+  content: { padding: 20, paddingBottom: 36 },
+  eyebrow: {
+    color: "#52708D",
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight: "700",
+    letterSpacing: 1,
   },
-  text:{
-   fontSize:16,
+  title: {
+    marginTop: 3,
+    color: "#102F4E",
+    fontSize: 28,
+    lineHeight: 34,
+    fontWeight: "800",
   },
-  headerImage: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    gap: 20,
-    marginTop: 20,
-  },
-  hd:{
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    gap:5
-  },
-  main: {
-    width: '90%',
-    padding: 5,
-    paddingLeft:20
-  },
-  headertxt1: {
-    fontSize: 20,
-    color: '#001E40',
-    fontWeight: '700',
-  },
-  prono: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-
-  },
-  themedin: {
-    width: '80%'
-  },
-  input: {
-    padding: 10,
-    borderRadius: 10,
-    borderStyle: "solid",
-  },
-  btn: {
-    backgroundColor: '#C3C6D180',
-    padding: 10,
-    borderRadius: 10,
-    fontSize: 17,},
- 
-  dept: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "80%",
-    margin: 20,
-
-
-  },
-  all: {
-  backgroundColor: '#001E40',
-  fontSize: 17,
-  padding:8,
-  borderRadius:10,
-  color:'#fff'
-  },
- 
-  div1: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around'
-  },
-  ava: {
-    color: '#000',
-    backgroundColor: '#4ADE80',
-    borderRadius: 30,
-    textAlign: 'center',
-    fontSize: 15,
-    padding: 3,
-    margin: 7,
-
-  },
-  view1: {
-    borderRadius: 20,
-
-    width: '95%',
-    padding: 10,
-    marginTop: 20,
-    marginBottom: 10,
-
-  },
-  pressbtn: {
-    backgroundColor: '#001E40',
-    
-    width: '80%',
-    marginLeft: 30,
-    padding: 8,
-    borderRadius: 10,
-  
-    marginTop:10,
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'center',
-    gap:10,
-  },
-  prestxt:{
-    color: '#fff',
-    fontSize: 17,
-  },
-  inputs: {
-    borderRadius: 10,
-    borderColor: '#000',
-    borderStyle: 'solid',
-    height: 45,
-    borderWidth: 2,
-    paddingHorizontal: 40,
-    margin: 10,
-    marginBottom: 20,
-    width: '90%',
-    marginLeft:-30,
-
-  },
-
- in:{
-  display:'flex',
-  flexDirection:'row',
-  alignItems:'center',
-  justifyContent:'center',
-
- },
- img1:{
-  marginBottom:6,
- }
-
-
-
-
+  subtitle: { marginTop: 5, color: "#687887", fontSize: 14, lineHeight: 20 },
+  filters: { marginTop: 22 },
+  list: { marginTop: 18, gap: 14 },
 });
