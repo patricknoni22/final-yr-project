@@ -1,15 +1,14 @@
-import { Link, router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
-  Image,
   Pressable,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
+import Text, { InterTextInput as TextInput } from "../../src/components/InterText";
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
@@ -17,210 +16,255 @@ export default function SignInScreen() {
   const [role, setRole] = useState("student");
 
   const handleLogin = () => {
-    if (role === "lecturer") {
-      router.push("/(lecturer)/dashboard");
-      return;
-    }
-    router.push("/(student)/dashboard");
+    router.push(
+      role === "lecturer" ? "/(lecturer)/dashboard" : "/(student)/dashboard",
+    );
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <View style={styles.header}>
-          <Image
-          source={require('./img-sign/Background.png')}
-         
-            style={styles.logo}
-          />
-          <Text style={styles.sm}>Smart Meet</Text>
-        </View>
-      </View>
-      <View style={styles.main}>
-        <Text style={styles.txt2}>
-          <Text style={styles.h2}>Welcome Back</Text>
-          <Text style={styles.p1}>
-            Please enter your credentials to access your portal.
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView
+        contentContainerStyle={styles.page}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.card}>
+          <View style={styles.brand}>
+            <View style={styles.logoBox}>
+              <Ionicons name="school-outline" size={20} color="#FFFFFF" />
+            </View>
+            <Text style={styles.brandName}>SmartMeet</Text>
+          </View>
+
+          <Text style={styles.title}>Welcome Back</Text>
+          <Text style={styles.subtitle}>
+            Please enter your credentials to{"\n"}access your portal.
           </Text>
-        </Text>
-        <View style={styles.but}>
-          <Pressable
-            style={[styles.roleButton, role === "student" && styles.roleButtonActive]}
-            onPress={() => setRole("student")}
-          >
-            <Text style={styles.roleButtonText}>Student</Text>
+
+          <RoleSelector role={role} setRole={setRole} />
+
+          <FieldLabel>UNIVERSITY EMAIL</FieldLabel>
+          <View style={styles.inputShell}>
+            <Ionicons name="mail-outline" size={18} color="#7B8491" />
+            <TextInput
+              style={styles.input}
+              placeholder="e.g. smith.j@university.edu"
+              placeholderTextColor="#7B8491"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
+          </View>
+
+          <View style={styles.passwordHeading}>
+            <FieldLabel>PASSWORD</FieldLabel>
+            <Pressable onPress={() => router.push("/forgot-password")}>
+              <Text style={styles.forgot}>Forgot Password?</Text>
+            </Pressable>
+          </View>
+          <View style={styles.inputShell}>
+            <Ionicons name="lock-closed-outline" size={18} color="#7B8491" />
+            <TextInput
+              style={styles.input}
+              placeholder="••••••••"
+              placeholderTextColor="#7B8491"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
+          </View>
+
+          <Pressable style={styles.primaryButton} onPress={handleLogin}>
+            <Text style={styles.primaryText}>Log In</Text>
+            <Ionicons name="log-in-outline" size={18} color="#FFFFFF" />
           </Pressable>
-          <Pressable
-            style={[styles.roleButton, role === "lecturer" && styles.roleButtonActive]}
-            onPress={() => setRole("lecturer")}
-          >
-            <Text style={styles.roleButtonText}>Lecturer</Text>
-          </Pressable>
+
+          <View style={styles.accountRow}>
+            <Text style={styles.accountText}>Don&apos;t have an account? </Text>
+            <Pressable onPress={() => router.push("/sign-up")}>
+              <Text style={styles.accountLink}>Register</Text>
+            </Pressable>
+          </View>
         </View>
-        <Text style={styles.uemail}>university email</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your Email"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-        />
-
-        <View style={styles.pass}>
-          <Text>PASSWORD </Text>
-          <Link href={'/'} style={styles.link}
-          > Forgot Password?</Link>
-
-        </View>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your Password"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.button1}> Login</Text>
-          <Image source={require('./img-sign/log.png')}/>
-        </TouchableOpacity>
-
-        <Text style={styles.ft}>
-          <Text>Don t have an account? </Text>
-          <TouchableOpacity onPress={() => { router.push("/sign-up") }}>
-            <Text style={{ color:'#1E3A8A'}}> Register</Text>
-          </TouchableOpacity>
-        </Text>
-      </View>
-     
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
+function FieldLabel({ children }) {
+  return <Text style={styles.label}>{children}</Text>;
+}
+
+function RoleSelector({ role, setRole }) {
+  return (
+    <View style={styles.roleSelector}>
+      {[
+        ["student", "Student"],
+        ["lecturer", "Lecturer"],
+      ].map(([value, label]) => (
+        <Pressable
+          key={value}
+          style={[styles.roleButton, role === value && styles.roleButtonActive]}
+          onPress={() => setRole(value)}
+        >
+          <Text
+            style={[styles.roleText, role === value && styles.roleTextActive]}
+          >
+            {label}
+          </Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
-  container: {
-    margin: 20,
-  },
-  main: {
-    marginLeft: 20,
-  },
-  header: {
-    textAlign: "left",
-    margin: 10,
-    fontSize: 20,
-    color: "blue",
-    display: "flex",
-    flexDirection: 'row',
+  safeArea: { flex: 1, backgroundColor: "#F8F8FC" },
+  page: {
+    flexGrow: 1,
+    justifyContent: "center",
     alignItems: "center",
-    gap: 5,
+    padding: 24,
   },
-  sm: {
-    fontSize: 40,
-  },
-  logo: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-  },
-  h2: {
-    color: '#000',
-    fontSize: 35,
-    fontWeight: 600,
-  },
-
-  p1: {
-    width: "70%",
-    fontSize: 17,
-
-  },
-  but: {
-    margin: 10,
-    marginTop: 30,
-    marginBottom: 20,
-    backgroundColor: "#adaeaf",
-    padding: 5,
-    display: "flex",
-    flexDirection: 'row',
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    width: "80%",
+  card: {
+    width: "100%",
+    maxWidth: 360,
     borderRadius: 10,
-    fontSize: 20,
+    backgroundColor: "#FFFFFF",
+    padding: 36,
+    shadowColor: "#001E40",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.09,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  brand: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginBottom: 42,
+  },
+  logoBox: {
+    width: 38,
+    height: 38,
+    borderRadius: 8,
+    backgroundColor: "#003F78",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  brandName: { color: "#003F78", fontSize: 18, fontWeight: "700" },
+  title: {
+    color: "#17191C",
+    fontSize: 30,
+    lineHeight: 36,
+    fontWeight: "800",
+    marginBottom: 5,
+  },
+  subtitle: {
+    color: "#60656D",
+    fontSize: 14,
+    lineHeight: 18,
+    marginBottom: 36,
+  },
+  roleSelector: {
+    height: 42,
+    flexDirection: "row",
+    backgroundColor: "#ECECF2",
+    borderRadius: 8,
+    padding: 4,
+    marginBottom: 24,
   },
   roleButton: {
-    padding: 7,
-    width: "40%",
+    flex: 1,
     borderRadius: 6,
-    backgroundColor: "#efefef",
+    alignItems: "center",
+    justifyContent: "center",
   },
   roleButtonActive: {
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#001E40",
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  roleText: { color: "#50525B", fontSize: 13, fontWeight: "600" },
+  roleTextActive: { color: "#002B55" },
+  label: {
+    color: "#555A63",
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: "700",
+    letterSpacing: 0.35,
+    marginBottom: 7,
+  },
+  passwordHeading: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 22,
+  },
+  forgot: {
+    color: "#001E40",
+    fontSize: 12,
+    fontWeight: "700",
+    marginBottom: 7,
+  },
+  inputShell: {
+    height: 48,
     borderWidth: 1,
-    borderColor: "#1f50ff",
-  },
-  roleButtonText: {
-    textAlign: "center",
-    fontWeight: "600",
-  },
-  txt2: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'start',
+    borderColor: "#C7CCD8",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    flexDirection: "row",
+    alignItems: "center",
     gap: 10,
   },
-  uemail: {
-    textTransform: 'uppercase',
-    margin: 10,
-  },
   input: {
-    borderRadius: 10,
-    borderColor: '#000',
-    borderStyle: 'solid',
-    height: 45,
-    borderWidth: 2,
-    paddingHorizontal: 30,
-    margin: 10,
-    marginBottom: 20,
-    width:'85%'
-
+    flex: 1,
+    height: "100%",
+    color: "#17191C",
+    fontSize: 13,
+    padding: 0,
   },
-  button: {
-    margin: 10,
-    backgroundColor: '#001E40',
-    padding: 15,
-    borderRadius: 10,
-    width: '80%',
-    marginBottom: 20,
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'center',
-    gap:8,
+  primaryButton: {
+    height: 54,
+    borderRadius: 7,
+    backgroundColor: "#003F78",
+    marginTop: 24,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
   },
-  button1:{
-    color: '#fff',
-    fontSize: 18,
-    textAlign: 'center'
+  primaryText: { color: "#FFFFFF", fontSize: 14, fontWeight: "700" },
+  dividerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 15,
+    marginTop: 52,
+    marginBottom: 32,
   },
-  link: {
-    color: '#001E40',
-    fontSize: 16,
-    marginRight: 50,
+  divider: { flex: 1, height: 1, backgroundColor: "#CFD3DC" },
+  dividerText: {
+    color: "#646870",
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 0.7,
   },
-  pass: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-
+  socialRow: { flexDirection: "row", gap: 20 },
+  socialButton: {
+    flex: 1,
+    height: 48,
+    borderWidth: 1,
+    borderColor: "#C7CCD8",
+    borderRadius: 7,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 9,
   },
-  ft: {
-    marginRight:30,
-    padding: 10,
-    textAlign: 'center',
-
-
-  },
-
-
+  socialText: { color: "#17191C", fontSize: 13, fontWeight: "500" },
+  accountRow: { flexDirection: "row", justifyContent: "center", marginTop: 42 },
+  accountText: { color: "#4E535B", fontSize: 12 },
+  accountLink: { color: "#001E40", fontSize: 12, fontWeight: "600" },
 });
