@@ -1,0 +1,13 @@
+import express from "express";
+import { booking, getBookings, getBooking, acceptBooking, cancelBooking, completedBooking, reschedule, rejectBooking, missedBooking } from "../controller/booking.controller.js";
+import { authenticationToken, roleMiddleware } from "../middleware/authMiddleware.js";
+export const bookingRoute = express.Router();
+bookingRoute.post("/booking", authenticationToken, roleMiddleware("STUDENT"), booking);
+bookingRoute.get("/bookings", authenticationToken, getBookings);
+bookingRoute.get("/booking/:id", authenticationToken, getBooking);
+bookingRoute.put("/booking/:id/accept", authenticationToken, roleMiddleware("LECTURER"), acceptBooking);
+bookingRoute.put("/booking/:id/cancel", authenticationToken, cancelBooking);
+bookingRoute.put("/booking/:id/completed", authenticationToken, roleMiddleware("LECTURER"), completedBooking);
+bookingRoute.put("/booking/:id/reschedule", authenticationToken, reschedule);
+bookingRoute.put("/booking/:id/reject", authenticationToken, roleMiddleware("LECTURER"), rejectBooking);
+bookingRoute.put("/booking/:id/missed", authenticationToken, roleMiddleware("LECTURER"), missedBooking);

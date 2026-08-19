@@ -1,0 +1,4 @@
+export const USER_ROLES = {
+  STUDENT: "STUDENT",
+  LECTURER: "LECTURER",
+};
