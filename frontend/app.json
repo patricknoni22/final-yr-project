@@ -1,0 +1,55 @@
+{
+  "expo": {
+    "name": "SmartMeet",
+    "slug": "mma",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "smartmeet",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "icon": "./src/assets/images/smartmeet-icon.png",
+    "android": {
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.mma01steam.mma",
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/smartmeet-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+
+    "web": {
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/assets/images/smartmeet-icon.png",
+          "imageWidth": 120,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "image": "./src/assets/images/smartmeet-icon.png",
+            "backgroundColor": "#ffffff"
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "0b697c71-83bd-483e-a3f4-07ba24c7e51e"
+      }
+    },
+    "owner": "mma01s-team"
+  }
+}
