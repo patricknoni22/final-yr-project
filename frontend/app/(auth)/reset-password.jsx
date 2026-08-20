@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Alert, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
@@ -31,7 +32,14 @@ export default function ResetPasswordScreen() {
 }
 
 function Field({ label, ...props }) {
-  return <View style={styles.field}><Text style={styles.label}>{label}</Text><TextInput style={styles.input} {...props} /></View>;
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const isPassword = Boolean(props.secureTextEntry);
+  return <View style={styles.field}><Text style={styles.label}>{label}</Text><View style={styles.inputShell}>
+    <TextInput style={styles.input} {...props} secureTextEntry={isPassword && !passwordVisible} />
+    {isPassword ? <Pressable onPress={() => setPasswordVisible((visible) => !visible)} hitSlop={10} accessibilityRole="button" accessibilityLabel={passwordVisible ? "Hide password" : "Show password"}>
+      <Ionicons name={passwordVisible ? "eye-off-outline" : "eye-outline"} size={20} color="#7B8491" />
+    </Pressable> : null}
+  </View></View>;
 }
 
 const styles = StyleSheet.create({
@@ -40,7 +48,8 @@ const styles = StyleSheet.create({
   title: { fontSize: 26, fontWeight: "700", color: "#173A5E" },
   copy: { marginTop: 8, marginBottom: 24, color: "#65717D", lineHeight: 20 }, field: { marginBottom: 16 },
   label: { marginBottom: 7, fontSize: 11, fontWeight: "700", color: "#555A63" },
-  input: { height: 48, paddingHorizontal: 12, borderWidth: 1, borderColor: "#C7CCD8", borderRadius: 8 },
+  inputShell: { height: 48, paddingHorizontal: 12, borderWidth: 1, borderColor: "#C7CCD8", borderRadius: 8, flexDirection: "row", alignItems: "center" },
+  input: { flex: 1, height: "100%" },
   button: { height: 50, marginTop: 6, alignItems: "center", justifyContent: "center", borderRadius: 7, backgroundColor: "#003F78" },
   buttonText: { color: "#FFFFFF", fontWeight: "700" }, disabled: { opacity: 0.65 },
 });

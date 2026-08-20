@@ -15,8 +15,8 @@ export default function SignUpScreen() {
 
   const registerMutation = useRegister({
     onSuccess: () => {
-      Alert.alert("Account created", "You can now log in.", [
-        { text: "Continue", onPress: () => router.replace("/sign-in") },
+      Alert.alert("Account created", "Check your email for your verification token.", [
+        { text: "Continue", onPress: () => router.replace({ pathname: "/verify-email", params: { email: email.trim().toLowerCase() } }) },
       ]);
     },
     onError: (error) => {
@@ -84,13 +84,17 @@ export default function SignUpScreen() {
   );
 }
 
-function FormField({ label, icon, ...inputProps }) {
+function FormField({ label, icon, secureTextEntry = false, ...inputProps }) {
+  const [passwordVisible, setPasswordVisible] = useState(false);
   return (
     <View style={styles.field}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.inputShell}>
         <Ionicons name={icon} size={18} color="#7B8491" />
-        <TextInput style={styles.input} placeholderTextColor="#7B8491" autoCapitalize="none" {...inputProps} />
+        <TextInput style={styles.input} placeholderTextColor="#7B8491" autoCapitalize="none" secureTextEntry={secureTextEntry && !passwordVisible} {...inputProps} />
+        {secureTextEntry ? <Pressable onPress={() => setPasswordVisible((visible) => !visible)} hitSlop={10} accessibilityRole="button" accessibilityLabel={passwordVisible ? "Hide password" : "Show password"}>
+          <Ionicons name={passwordVisible ? "eye-off-outline" : "eye-outline"} size={20} color="#7B8491" />
+        </Pressable> : null}
       </View>
     </View>
   );

@@ -75,5 +75,5 @@ export const sendVerificationEmail = (email, token) =>
   sendEmail(
     email,
     "Verify Your Email",
-    `Use this token to verify your email address: ${token}`,
+    `Use this 8-digit code to verify your email address: ${token}`,
   );

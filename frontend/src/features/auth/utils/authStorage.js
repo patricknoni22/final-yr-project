@@ -25,7 +25,8 @@ export function setAuthSession(nextSession) {
 
 export function clearAuthSession() {
   session = null;
-  if (typeof localStorage !== "undefined") localStorage.removeItem("auth-session");
+  if (typeof localStorage !== "undefined")
+    localStorage.removeItem("auth-session");
 }
 
 export function getUserIdFromToken(token) {
