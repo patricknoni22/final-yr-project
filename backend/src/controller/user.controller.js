@@ -20,7 +20,7 @@ import {
 } from "../utils/email.js";
 
 const generateVerificationCode = () =>
-  crypto.randomInt(10_000_000, 100_000_000).toString();
+  crypto.randomInt(100_000, 1_000_000).toString();
 
 export async function UserRegister(req, res, next) {
   const { error } = registerSchema.validate(req.body);
@@ -76,6 +76,11 @@ export async function UserLogin(req, res, next) {
     const user = await UserLoginService(req.body.email.toLowerCase());
     if (!user || !(await bcrypt.compare(req.body.password, user.password)))
       return res.status(401).json({ message: "Invalid credentials" });
+    if (user.role !== req.body.role.toUpperCase())
+      return res.status(403).json({
+        code: "ROLE_MISMATCH",
+        message: `This account is registered as a ${user.role.toLowerCase()}. Select ${user.role.toLowerCase()} to continue.`,
+      });
     if (!user.isActive)
       return res.status(403).json({ message: "Account is inactive" });
     if (!user.isEmailVerified)
