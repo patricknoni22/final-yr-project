@@ -39,7 +39,11 @@ export default function SignInScreen() {
       Alert.alert("Missing details", "Enter your email and password.");
       return;
     }
-    loginMutation.mutate({ email: email.trim().toLowerCase(), password });
+    loginMutation.mutate({
+      email: email.trim().toLowerCase(),
+      password,
+      role: role.toUpperCase(),
+    });
   };
 
   return (
