@@ -15,6 +15,7 @@ import { useLogin } from "../../src/features/auth/hooks/useAuth";
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [role, setRole] = useState("student");
 
   const loginMutation = useLogin({
@@ -22,6 +23,13 @@ export default function SignInScreen() {
       router.replace(response.data?.user?.role === "LECTURER" ? "/(lecturer)/dashboard" : "/(student)/dashboard");
     },
     onError: (error) => {
+      if (error.response?.data?.code === "EMAIL_NOT_VERIFIED") {
+        Alert.alert("Email not verified", "Verify your email before logging in.", [
+          { text: "Cancel", style: "cancel" },
+          { text: "Verify", onPress: () => router.push({ pathname: "/verify-email", params: { email: email.trim().toLowerCase() } }) },
+        ]);
+        return;
+      }
       Alert.alert("Login failed", error.response?.data?.message || error.message || "Please try again.");
     },
   });
@@ -81,10 +89,13 @@ export default function SignInScreen() {
               style={styles.input}
               placeholder="••••••••"
               placeholderTextColor="#7B8491"
-              secureTextEntry
+              secureTextEntry={!passwordVisible}
               value={password}
               onChangeText={setPassword}
             />
+            <Pressable onPress={() => setPasswordVisible((visible) => !visible)} hitSlop={10} accessibilityRole="button" accessibilityLabel={passwordVisible ? "Hide password" : "Show password"}>
+              <Ionicons name={passwordVisible ? "eye-off-outline" : "eye-outline"} size={20} color="#7B8491" />
+            </Pressable>
           </View>
 
           <Pressable style={[styles.primaryButton, loginMutation.isPending && styles.buttonDisabled]} onPress={handleLogin} disabled={loginMutation.isPending}>

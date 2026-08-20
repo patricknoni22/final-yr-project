@@ -10,6 +10,16 @@ export async function register(user) {
   return response.data;
 }
 
+export async function verifyEmail({ token }) {
+  const response = await apiClient.post("/verify-email", { token });
+  return response.data;
+}
+
+export async function resendVerificationEmail({ email }) {
+  const response = await apiClient.post("/resend-verification", { email });
+  return response.data;
+}
+
 export async function forgotPassword({ email }) {
   const response = await apiClient.post("/forgot-password", { email });
   return response.data;

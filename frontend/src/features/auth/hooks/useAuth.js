@@ -6,7 +6,9 @@ import {
   refreshToken,
   register,
   resetPassword,
-} from "../api/authApi";
+  resendVerificationEmail,
+  verifyEmail,
+} from "../services/authApi";
 import {
   clearAuthSession,
   getAuthSession,
@@ -23,7 +25,8 @@ export function useLogin(options = {}) {
       if (tokens) {
         setAuthSession({
           ...tokens,
-          userId: response.data?.user?.id ?? getUserIdFromToken(tokens.accessToken),
+          userId:
+            response.data?.user?.id ?? getUserIdFromToken(tokens.accessToken),
         });
       }
       options.onSuccess?.(response, variables, context);
@@ -33,6 +36,14 @@ export function useLogin(options = {}) {
 
 export function useRegister(options = {}) {
   return useMutation({ mutationFn: register, ...options });
+}
+
+export function useVerifyEmail(options = {}) {
+  return useMutation({ mutationFn: verifyEmail, ...options });
+}
+
+export function useResendVerificationEmail(options = {}) {
+  return useMutation({ mutationFn: resendVerificationEmail, ...options });
 }
 
 export function useForgotPassword(options = {}) {
@@ -48,7 +59,9 @@ export function useLogout(options = {}) {
   return useMutation({
     mutationFn: ({ userId } = {}) => {
       const resolvedUserId = userId ?? getAuthSession()?.userId;
-      return resolvedUserId ? logout({ userId: resolvedUserId }) : Promise.resolve();
+      return resolvedUserId
+        ? logout({ userId: resolvedUserId })
+        : Promise.resolve();
     },
     ...options,
     onSettled: (data, error, variables, context) => {
