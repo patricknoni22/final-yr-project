@@ -5,6 +5,8 @@ import BookingCard from "../../src/components/booking/BookingCard";
 import BookingFilterTabs from "../../src/components/booking/BookingFilterTabs";
 import Text from "../../src/components/InterText";
 import NavHeader from "../../src/components/NavHeader";
+import { useBookings } from "../../src/features/bookings/hooks/useBookings";
+import { formatBooking } from "../../src/features/bookings/utils/bookingView";
 
 const filters = ["All", "Upcoming", "Completed"];
 const bookings = [
@@ -13,7 +15,7 @@ const bookings = [
     name: "Dr. Sarah Smith",
     department: "Information Technology",
     date: "Oct 12, 2026",
-    time: "12:00 PM",
+    time: "12:00 PM - 12:30 PM",
     location: "Room 402",
     status: "Approved",
     group: "Upcoming",
@@ -24,7 +26,7 @@ const bookings = [
     name: "Prof. James Wilson",
     department: "Computer Science",
     date: "Oct 15, 2026",
-    time: "2:30 PM",
+    time: "2:30 PM - 3:00 PM",
     location: "Room 105",
     status: "Pending",
     group: "Upcoming",
@@ -35,7 +37,7 @@ const bookings = [
     name: "Prof. Patrick Bond",
     department: "Information Technology",
     date: "Sep 28, 2026",
-    time: "10:00 AM",
+    time: "10:00 AM - 10:30 AM",
     location: "Admin Office",
     status: "Completed",
     group: "Completed",
@@ -46,7 +48,9 @@ const bookings = [
 export default function StudentBookingsScreen() {
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState("All");
-  const visibleBookings = bookings.filter(
+  const { data } = useBookings();
+  const apiBookings = (data || []).map((item) => formatBooking(item, "student", require("./student-img/profile.png")));
+  const visibleBookings = (data ? apiBookings : bookings).filter(
     (item) => activeFilter === "All" || item.group === activeFilter,
   );
 

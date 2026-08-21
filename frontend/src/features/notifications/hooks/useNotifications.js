@@ -1,1 +1,4 @@
-// Add implementation here
+import { useQuery } from "@tanstack/react-query";
+import { getNotifications } from "../api/notificationApi";
+
+export const useNotifications = () => useQuery({ queryKey: ["notifications"], queryFn: getNotifications });

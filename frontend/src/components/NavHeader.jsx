@@ -1,13 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Text from "./InterText";
-
-const defaultAvatar = require("../../app/(student)/student-img/profile.png");
+import InitialsAvatar from "./common/InitialsAvatar";
+import { useMyProfile } from "../features/profile/hooks/useProfile";
 
 const NavHeader = ({
-  avatarSource = defaultAvatar,
   actionIcon = "notifications-outline",
 }) => {
+  const { data: profile } = useMyProfile();
   return (
     <View style={styles.header}>
       <View style={styles.brand}>
@@ -16,7 +16,7 @@ const NavHeader = ({
       </View>
       <View style={styles.headerActions}>
         <Ionicons name={actionIcon} size={18} color="#38516C" />
-        <Image source={avatarSource} style={styles.avatarSmall} />
+        <InitialsAvatar name={profile?.username || "User"} size={28} style={styles.avatarSmall} />
       </View>
     </View>
   );
