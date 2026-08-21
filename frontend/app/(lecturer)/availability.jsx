@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
+  Alert,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -13,6 +14,8 @@ import {
 } from "../../src/components/availability/AvailabilityControls";
 import Text from "../../src/components/InterText";
 import NavHeader from "../../src/components/NavHeader";
+import { useAvailability } from "../../src/features/availability/hooks/useAvailability";
+import { useUpdateAvailability } from "../../src/features/availability/hooks/useUpdateAvailability";
 
 const durationOptions = [15, 30, 45, 60];
 const initialDays = [
@@ -26,6 +29,20 @@ const initialDays = [
 export default function AvailabilityScreen() {
   const [duration, setDuration] = useState(30);
   const [days, setDays] = useState(initialDays);
+  const { data } = useAvailability();
+  const updateMutation = useUpdateAvailability({
+    onSuccess: () => Alert.alert("Saved", "Your availability has been updated."),
+    onError: (error) => Alert.alert("Could not save", error.response?.data?.message || error.message),
+  });
+
+  useEffect(() => {
+    if (!data) return;
+    setDuration(data.duration || 30);
+    setDays((current) => current.map((day, index) => {
+      const slot = data.availability?.find((item) => item.dayOfWeek === index + 1);
+      return slot ? { ...day, enabled: true, start: to12Hour(slot.startTime), end: to12Hour(slot.endTime) } : { ...day, enabled: false };
+    }));
+  }, [data]);
 
   const updateDay = (index, changes) => {
     setDays((current) =>
@@ -35,9 +52,14 @@ export default function AvailabilityScreen() {
     );
   };
 
+  const save = () => updateMutation.mutate({
+    duration,
+    availability: days.flatMap((day, index) => day.enabled ? [{ dayOfWeek: index + 1, startTime: to24Hour(day.start), endTime: to24Hour(day.end) }] : []),
+  });
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <NavHeader avatarSource={require("./lect-img/lec.png")} />
+      <NavHeader />
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -90,13 +112,31 @@ export default function AvailabilityScreen() {
           ))}
         </View>
 
-        <Pressable style={styles.saveButton}>
+        <Pressable style={[styles.saveButton, updateMutation.isPending && { opacity: 0.65 }]} onPress={save} disabled={updateMutation.isPending}>
           <Ionicons name="save-outline" size={18} color="#FFFFFF" />
-          <Text style={styles.saveText}>Save availability</Text>
+          <Text style={styles.saveText}>{updateMutation.isPending ? "Saving..." : "Save availability"}</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
+}
+
+function to24Hour(value) {
+  const match = String(value).trim().match(/^(\d{1,2}):(\d{2})(?:\s*([AP]M))?$/i);
+  if (!match) return value;
+  let hour = Number(match[1]);
+  const period = match[3]?.toUpperCase();
+  if (period === "PM" && hour < 12) hour += 12;
+  if (period === "AM" && hour === 12) hour = 0;
+  return `${String(hour).padStart(2, "0")}:${match[2]}`;
+}
+
+function to12Hour(value) {
+  const match = String(value).match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return value;
+  const hour = Number(match[1]);
+  const displayHour = hour % 12 || 12;
+  return `${String(displayHour).padStart(2, "0")}:${match[2]} ${hour >= 12 ? "PM" : "AM"}`;
 }
 
 const styles = StyleSheet.create({

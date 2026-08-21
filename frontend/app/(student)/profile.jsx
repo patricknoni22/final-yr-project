@@ -1,12 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Switch,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -15,33 +14,17 @@ import Text, {
 } from "../../src/components/InterText";
 import NavHeader from "../../src/components/NavHeader";
 import { useLogout } from "../../src/features/auth/hooks/useAuth";
+import { useChangePassword, useMyProfile, useUpdateMyProfile } from "../../src/features/profile/hooks/useProfile";
 
-function Field({ label, value, secureTextEntry = false }) {
+function Field({ label, value, secureTextEntry = false, ...props }) {
   return (
     <View style={styles.field}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
-        defaultValue={value}
+        value={value}
         secureTextEntry={secureTextEntry}
         style={styles.input}
-      />
-    </View>
-  );
-}
-
-function SettingRow({ title, description, value, onValueChange }) {
-  return (
-    <View style={styles.settingRow}>
-      <View style={styles.settingCopy}>
-        <Text style={styles.settingTitle}>{title}</Text>
-        <Text style={styles.settingDescription}>{description}</Text>
-      </View>
-      <Switch
-        value={value}
-        onValueChange={onValueChange}
-        trackColor={{ false: "#DDE2E7", true: "#76A7D4" }}
-        thumbColor="#FFFFFF"
-        style={styles.switch}
+        {...props}
       />
     </View>
   );
@@ -57,12 +40,28 @@ function Panel({ title, children }) {
 }
 
 export default function StudentSettingsScreen() {
-  const [bookingAlerts, setBookingAlerts] = useState(true);
-  const [searchVisibility, setSearchVisibility] = useState(true);
-  const [dataVisibility, setDataVisibility] = useState(false);
+  const [username, setUsername] = useState("");
+  const [studentId, setStudentId] = useState("");
+  const [department, setDepartment] = useState("");
+  const [faculty, setFaculty] = useState("");
+  const [level, setLevel] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const { data: profile } = useMyProfile();
+  const updateMutation = useUpdateMyProfile({ onSuccess: () => Alert.alert("Saved", "Your profile has been updated."), onError: (error) => Alert.alert("Could not save", error.response?.data?.message || error.message) });
+  const passwordMutation = useChangePassword({ onSuccess: () => { setCurrentPassword(""); setNewPassword(""); Alert.alert("Password updated", "Your password has been changed."); }, onError: (error) => Alert.alert("Could not update password", error.response?.data?.message || error.message) });
   const logoutMutation = useLogout({
     onSettled: () => router.replace("/sign-in"),
   });
+
+  useEffect(() => {
+    if (!profile) return;
+    setUsername(profile.username || "");
+    setStudentId(profile.studentId || "");
+    setDepartment(profile.department || "");
+    setFaculty(profile.faculty || "");
+    setLevel(profile.level || "");
+  }, [profile]);
 
   const handleLogout = () => {
     Alert.alert("Log out", "Are you sure you want to log out?", [
@@ -75,7 +74,6 @@ export default function StudentSettingsScreen() {
     <SafeAreaView style={styles.safeArea}>
       <NavHeader
         actionIcon="search-outline"
-        avatarSource={require("./student-img/avatar.png")}
       />
 
       <ScrollView
@@ -87,72 +85,40 @@ export default function StudentSettingsScreen() {
           <Text style={styles.subtitle}>
             Manage your student profile and account preferences
           </Text>
-          <TouchableOpacity style={styles.saveButton}>
+          <TouchableOpacity style={styles.saveButton} onPress={() => updateMutation.mutate({ username: username.trim(), studentId: studentId.trim(), department: department.trim(), faculty: faculty.trim(), level: level.trim() })} disabled={updateMutation.isPending}>
             <Ionicons name="save-outline" size={13} color="#FFFFFF" />
-            <Text style={styles.saveText}>Save All Changes</Text>
+            <Text style={styles.saveText}>{updateMutation.isPending ? "Saving..." : "Save All Changes"}</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.settingsGrid}>
           <View style={styles.panels}>
             <Panel title="Personal Information">
-              <Field label="Full Name" value="Alex Johnson" />
-              <Field label="Student ID" value="STU-2024-001" />
+              <Field label="Full Name" value={username} onChangeText={setUsername} />
+              <Field label="Student ID" value={studentId} onChangeText={setStudentId} />
+              <Field label="Department" value={department} onChangeText={setDepartment} />
+              <Field label="Faculty" value={faculty} onChangeText={setFaculty} />
+              <Field label="Level" value={level} onChangeText={setLevel} keyboardType="number-pad" />
               <Field
                 label="Student Email"
-                value="alex.johnson@university.edu"
-              />
-            </Panel>
-
-            <Panel title="Notification Preferences">
-              <SettingRow
-                title="Booking Confirmations"
-                description="Get notified when a lecturer accepts your meeting request."
-                value={bookingAlerts}
-                onValueChange={setBookingAlerts}
+                value={profile?.email || ""}
+                editable={false}
               />
             </Panel>
 
             <Panel title="Password Change">
               <Field
                 label="Current Password"
-                value="password"
+                value={currentPassword}
+                onChangeText={setCurrentPassword}
                 secureTextEntry
               />
-              <Field label="New Password" value="" secureTextEntry />
-              <TouchableOpacity style={styles.secondaryButton}>
-                <Text style={styles.secondaryButtonText}>Update Password</Text>
+              <Field label="New Password" value={newPassword} onChangeText={setNewPassword} secureTextEntry />
+              <TouchableOpacity style={styles.secondaryButton} onPress={() => passwordMutation.mutate({ oldPassword: currentPassword, newPassword })} disabled={!currentPassword || newPassword.length < 6 || passwordMutation.isPending}>
+                <Text style={styles.secondaryButtonText}>{passwordMutation.isPending ? "Updating..." : "Update Password"}</Text>
               </TouchableOpacity>
             </Panel>
 
-            <Panel title="Account Privacy">
-              <SettingRow
-                title="Search Visibility"
-                description="Allow lecturers and staff to find your profile in the student directory."
-                value={searchVisibility}
-                onValueChange={setSearchVisibility}
-              />
-              <SettingRow
-                title="Data Visibility"
-                description="Allow academic information to be visible to lecturers."
-                value={dataVisibility}
-                onValueChange={setDataVisibility}
-              />
-              <View style={styles.deactivatePanel}>
-                <View style={styles.deactivateCopy}>
-                  <Text style={styles.deactivateTitle}>
-                    Deactivate Portal Access
-                  </Text>
-                  <Text style={styles.deactivateDescription}>
-                    Temporarily disable your profile from the student booking
-                    portal.
-                  </Text>
-                </View>
-                <TouchableOpacity style={styles.deactivateButton}>
-                  <Text style={styles.deactivateButtonText}>Deactivate</Text>
-                </TouchableOpacity>
-              </View>
-            </Panel>
             <TouchableOpacity style={styles.logoutButton} onPress={handleLogout} disabled={logoutMutation.isPending}>
               <Ionicons name="log-out-outline" size={18} color="#B92D2D" />
               <Text style={styles.logoutText}>{logoutMutation.isPending ? "Logging out..." : "Log Out"}</Text>

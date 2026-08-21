@@ -2,7 +2,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import {
-  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -12,6 +11,10 @@ import {
 } from "react-native";
 import Text, { InterTextInput as TextInput } from "../../src/components/InterText";
 import NavHeader from "../../src/components/NavHeader";
+import { useLecturers } from "../../src/features/lecturers/hooks/useLecturers";
+import { useDepartments } from "../../src/features/departments/hooks/useDepartments";
+import InitialsAvatar from "../../src/components/common/InitialsAvatar";
+import { formatLecturerName } from "../../src/features/lecturers/utils/lecturerView";
 
 const lecturers = [
   {
@@ -19,9 +22,7 @@ const lecturers = [
     name: "Prof. James Wilson",
     department: "Computer Science",
     availability: "AVAILABLE TODAY",
-    rating: "4.8",
-    reviews: "128 reviews",
-    next: "Next: 2:00 PM",
+    next: "Next: 2:00 PM - 2:30 PM",
     image: require("./student-img/prof1.png"),
   },
   {
@@ -29,9 +30,7 @@ const lecturers = [
     name: "Dr. Elena Rodriguez",
     department: "Engineering",
     availability: "AVAILABLE TOMORROW",
-    rating: "4.8",
-    reviews: "96 reviews",
-    next: "Next: Tomorrow 10:00 AM",
+    next: "Next: Tomorrow 10:00 AM - 10:30 AM",
     image: require("./student-img/prof2.png"),
   },
   {
@@ -39,9 +38,7 @@ const lecturers = [
     name: "Prof. Sarah Chen",
     department: "Arts & Design",
     availability: "AVAILABLE TODAY",
-    rating: "5.0",
-    reviews: "120 reviews",
-    next: "Next: 3:30 PM",
+    next: "Next: 3:30 PM - 4:00 PM",
     image: require("./student-img/prof3.png"),
   },
 ];
@@ -52,6 +49,17 @@ export default function SearchScreen() {
   const router = useRouter();
   const [department, setDepartment] = useState("All");
   const [availableToday, setAvailableToday] = useState(false);
+  const [search, setSearch] = useState("");
+  const { data: lecturerData } = useLecturers({ search: search || undefined, department: department === "All" ? undefined : department });
+  const { data: departmentData } = useDepartments();
+  const apiDepartments = ["All", ...(departmentData || []).map((item) => item.name)];
+  const today = new Date().getDay();
+  const apiLecturers = (lecturerData || []).filter((item) => !availableToday || item.service?.some((service) => service.availability?.some((slot) => slot.dayOfWeek === today))).map((item) => {
+    const available = item.service?.some((service) => service.availability?.some((slot) => slot.dayOfWeek === today));
+    return { id: item.id, name: formatLecturerName(item.username, item.title), department: item.department || "Department not set", availability: available ? "AVAILABLE TODAY" : "VIEW AVAILABILITY", next: available ? "Available today" : "Check available days", image: item.imageUrl ? { uri: item.imageUrl } : require("./student-img/profile.png") };
+  });
+  const visibleLecturers = lecturerData ? apiLecturers : lecturers;
+  const visibleDepartments = departmentData ? apiDepartments : departments;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -70,6 +78,8 @@ export default function SearchScreen() {
             placeholder="Search by name or subject..."
             placeholderTextColor="#7A8491"
             returnKeyType="search"
+            value={search}
+            onChangeText={setSearch}
           />
         </View>
 
@@ -85,7 +95,7 @@ export default function SearchScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.chips}
         >
-          {departments.map((item) => {
+          {visibleDepartments.map((item) => {
             const selected = department === item;
 
             return (
@@ -115,10 +125,10 @@ export default function SearchScreen() {
         </View>
 
         <View style={styles.cards}>
-          {lecturers.map((lecturer) => (
+          {visibleLecturers.map((lecturer) => (
             <View key={lecturer.id} style={styles.card}>
               <View style={styles.cardTop}>
-                <Image source={lecturer.image} style={styles.avatar} />
+                <InitialsAvatar name={lecturer.name} size={62} style={styles.avatar} />
 
                 <View style={styles.lecturerInfo}>
                   <View style={styles.badge}>
@@ -130,11 +140,6 @@ export default function SearchScreen() {
               </View>
 
               <View style={styles.metaRow}>
-                <View style={styles.metaItem}>
-                  <Ionicons name="star" size={13} color="#F4B400" />
-                  <Text style={styles.rating}>{lecturer.rating}</Text>
-                  <Text style={styles.metaText}>({lecturer.reviews})</Text>
-                </View>
                 <View style={styles.metaItem}>
                   <Ionicons name="time-outline" size={13} color="#7D8793" />
                   <Text style={styles.metaText}>{lecturer.next}</Text>

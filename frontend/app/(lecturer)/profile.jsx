@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   SafeAreaView,
@@ -15,6 +15,7 @@ import Text, {
 } from "../../src/components/InterText";
 import NavHeader from "../../src/components/NavHeader";
 import { useLogout } from "../../src/features/auth/hooks/useAuth";
+import { useMyProfile, useUpdateMyProfile } from "../../src/features/profile/hooks/useProfile";
 
 function SectionTitle({ icon, children }) {
   return (
@@ -25,11 +26,11 @@ function SectionTitle({ icon, children }) {
   );
 }
 
-function Field({ label, value }) {
+function Field({ label, value, ...props }) {
   return (
     <View style={styles.field}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput defaultValue={value} style={styles.input} />
+      <TextInput value={value} style={styles.input} {...props} />
     </View>
   );
 }
@@ -55,7 +56,24 @@ function ToggleRow({ title, description, value, onValueChange }) {
 export default function LecturerSettingsScreen() {
   const [emailAlerts, setEmailAlerts] = useState(true);
   const [pushAlerts, setPushAlerts] = useState(false);
+  const [form, setForm] = useState({ username: "", title: "", department: "", office: "", bio: "" });
+  const { data: profile } = useMyProfile();
+  const updateMutation = useUpdateMyProfile({ onSuccess: () => Alert.alert("Saved", "Your profile has been updated."), onError: (error) => Alert.alert("Could not save", error.response?.data?.message || error.message) });
   const logoutMutation = useLogout({ onSettled: () => router.replace("/sign-in") });
+
+  useEffect(() => {
+    if (!profile) return;
+    setForm({ username: profile.username || "", title: profile.title || "", department: profile.department || "", office: profile.office || "", bio: profile.bio || "" });
+  }, [profile]);
+
+  const setField = (key, value) => setForm((current) => ({ ...current, [key]: value }));
+  const saveProfile = () => updateMutation.mutate({
+    username: form.username.trim(),
+    title: form.title.trim(),
+    department: form.department.trim(),
+    office: form.office.trim(),
+    bio: form.bio.trim(),
+  });
 
   const handleLogout = () => {
     Alert.alert("Log out", "Are you sure you want to log out?", [
@@ -64,43 +82,38 @@ export default function LecturerSettingsScreen() {
     ]);
   };
 
+  const deactivate = () => Alert.alert("Deactivate account", "Students will no longer be able to find or book you. Continue?", [
+    { text: "Cancel", style: "cancel" },
+    { text: "Deactivate", style: "destructive", onPress: () => updateMutation.mutate({ isActive: false }, { onSuccess: () => logoutMutation.mutate() }) },
+  ]);
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <NavHeader avatarSource={require("./lect-img/lec.png")} />
+      <NavHeader />
 
       <ScrollView
         contentContainerStyle={styles.page}
         showsVerticalScrollIndicator={false}
       >
+        <View style={styles.topActions}>
+          <TouchableOpacity style={styles.saveButton} onPress={saveProfile} disabled={updateMutation.isPending}>
+            <Ionicons name="save-outline" size={14} color="#FFFFFF" />
+            <Text style={styles.saveText}>{updateMutation.isPending ? "Saving..." : "Save changes"}</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.panel}>
           <SectionTitle icon="person-outline">Profile Information</SectionTitle>
-          <Field label="Full Name" value="Dr. Sarah Mitchell" />
-          <Field label="Academic Title" value="Senior Lecturer" />
-          <Field label="Department" value="History" />
-          <Field label="Office Location" value="Room A-12" />
-        </View>
-
-        <View style={styles.panel}>
-          <SectionTitle icon="school-outline">Academic Focus</SectionTitle>
-          <View style={styles.tags}>
-            {["Medieval History", "European Studies", "Cultural History"].map(
-              (tag) => (
-                <View key={tag} style={styles.tag}>
-                  <Text style={styles.tagText}>{tag}</Text>
-                </View>
-              ),
-            )}
-            <TouchableOpacity style={styles.addTag}>
-              <Ionicons name="add" size={11} color="#566675" />
-              <Text style={styles.addTagText}>Add focus</Text>
-            </TouchableOpacity>
-          </View>
+          <Field label="Full Name" value={form.username} onChangeText={(value) => setField("username", value)} />
+          <Field label="Academic Title" value={form.title} onChangeText={(value) => setField("title", value)} />
+          <Field label="Department" value={form.department} onChangeText={(value) => setField("department", value)} />
+          <Field label="Office Location" value={form.office} onChangeText={(value) => setField("office", value)} />
         </View>
 
         <View style={styles.panel}>
           <SectionTitle icon="document-text-outline">Biography</SectionTitle>
           <TextInput
-            defaultValue="Dr. Mitchell specializes in medieval European history and cultural studies. She is passionate about helping students connect historical ideas to the modern world."
+            value={form.bio}
+            onChangeText={(value) => setField("bio", value)}
             multiline
             textAlignVertical="top"
             style={styles.biography}
@@ -132,7 +145,7 @@ export default function LecturerSettingsScreen() {
               Temporarily disable your profile from the student booking portal.
             </Text>
           </View>
-          <TouchableOpacity style={styles.deactivateButton}>
+          <TouchableOpacity style={styles.deactivateButton} onPress={deactivate}>
             <Text style={styles.deactivateButtonText}>Deactivate</Text>
           </TouchableOpacity>
         </View>
@@ -177,6 +190,7 @@ const styles = StyleSheet.create({
   },
   saveText: { color: "#FFFFFF", fontSize: 13, fontWeight: "600" },
   page: { padding: 14, paddingBottom: 28, gap: 12 },
+  topActions: { flexDirection: "row", justifyContent: "flex-end" },
   panel: {
     padding: 13,
     borderWidth: 1,

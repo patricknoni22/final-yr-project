@@ -8,13 +8,17 @@ import {
 } from "../../src/components/dashboard/DashboardCards";
 import Text from "../../src/components/InterText";
 import NavHeader from "../../src/components/NavHeader";
+import { useStudentDashboard } from "../../src/features/dashboard/hooks/useDashboard";
+import { useMyProfile } from "../../src/features/profile/hooks/useProfile";
+import { formatBooking } from "../../src/features/bookings/utils/bookingView";
+import { useBookings } from "../../src/features/bookings/hooks/useBookings";
 
 const appointments = [
   {
     id: "sarah",
     name: "Dr. Sarah Smith",
     detail: "LDS Dept · Room 402",
-    date: "Oct 12, 12:00 PM",
+    date: "Oct 12, 12:00 PM - 12:30 PM",
     status: "Approved",
     image: require("./student-img/sarah.png"),
   },
@@ -22,7 +26,7 @@ const appointments = [
     id: "james",
     name: "Prof. James Wilson",
     detail: "Mathematics · Room 105",
-    date: "Oct 15, 2:30 PM",
+    date: "Oct 15, 2:30 PM - 3:00 PM",
     status: "Pending",
     image: require("./student-img/james.png"),
   },
@@ -30,6 +34,15 @@ const appointments = [
 
 export default function StudentDashboard() {
   const router = useRouter();
+  const { data: dashboard } = useStudentDashboard();
+  const { data: profile } = useMyProfile();
+  const { data: bookingData } = useBookings();
+  const upcomingBookings = (bookingData || []).filter((item) => new Date(item.startTime) >= new Date() && !["CANCELLED", "REJECTED"].includes(item.status)).sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+  const apiAppointments = upcomingBookings.slice(0, 3).map((item) => {
+    const booking = formatBooking(item, "student", require("./student-img/profile.png"));
+    return { ...booking, detail: `${booking.department} · ${booking.location}`, date: booking.dateTime };
+  });
+  const visibleAppointments = bookingData ? apiAppointments : appointments;
   return (
     <SafeAreaView style={styles.safeArea}>
       <NavHeader />
@@ -37,7 +50,7 @@ export default function StudentDashboard() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>Hello, Alex!</Text>
+        <Text style={styles.title}>Hello, {profile?.username?.split(" ")[0] || "Student"}!</Text>
         <Text style={styles.subtitle}>
           Ready for your academic consultations today?
         </Text>
@@ -45,11 +58,11 @@ export default function StudentDashboard() {
         <View style={styles.stats}>
           <StatCard
             icon="calendar-outline"
-            value="2"
+            value={String(dashboard?.upcoming?.length || 0)}
             label="Upcoming bookings"
             accent
           />
-          <StatCard icon="time-outline" value="12" label="Past consultations" />
+          <StatCard icon="time-outline" value={String(dashboard?.past?.length || 0)} label="Past consultations" />
         </View>
 
         <View style={styles.quickCard}>
@@ -76,7 +89,7 @@ export default function StudentDashboard() {
           />
         </View>
         <View style={styles.list}>
-          {appointments.map((appointment) => (
+          {visibleAppointments.map((appointment) => (
             <AppointmentCard
               key={appointment.name}
               appointment={appointment}
@@ -87,8 +100,9 @@ export default function StudentDashboard() {
                   name: appointment.name,
                   department: appointment.detail,
                   date: appointment.date,
+                  time: appointment.time,
                   status: appointment.status,
-                  location: appointment.detail.split("·").pop().trim(),
+                  location: appointment.location || appointment.detail.split("·").pop().trim(),
                 },
               })}
             />

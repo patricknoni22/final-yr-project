@@ -2,10 +2,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import Text from "../../../src/components/InterText";
+import { useBookingDetails } from "../../../src/features/bookings/hooks/useBookingDetails";
+import { formatBooking } from "../../../src/features/bookings/utils/bookingView";
 
 export default function BookingDetails() {
   const router = useRouter();
-  const booking = useLocalSearchParams();
+  const params = useLocalSearchParams();
+  const bookingId = typeof params.bookingId === "string" ? params.bookingId : "";
+  const { data } = useBookingDetails(bookingId);
+  const booking = data ? formatBooking(data, "student") : params;
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>

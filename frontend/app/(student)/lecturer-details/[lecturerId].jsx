@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import {
-  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -10,11 +9,16 @@ import {
 } from "react-native";
 import Text from "../../../src/components/InterText";
 import { fallbackLecturer, lecturersById } from "../../../src/data/lecturers";
+import { useLecturerDetails } from "../../../src/features/lecturers/hooks/useLecturerDetails";
+import { formatLecturer } from "../../../src/features/lecturers/utils/lecturerView";
+import InitialsAvatar from "../../../src/components/common/InitialsAvatar";
 
 export default function LecturerDetailsScreen() {
   const router = useRouter();
   const { lecturerId } = useLocalSearchParams();
-  const lecturer = lecturersById[lecturerId] || fallbackLecturer;
+  const resolvedId = typeof lecturerId === "string" ? lecturerId : "";
+  const { data } = useLecturerDetails(resolvedId);
+  const lecturer = data ? formatLecturer(data, require("../student-img/profile.png")) : lecturersById[resolvedId] || fallbackLecturer;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -31,7 +35,7 @@ export default function LecturerDetailsScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.profileCard}>
-          <Image source={lecturer.image} style={styles.avatar} />
+          <InitialsAvatar name={lecturer.name} size={92} style={styles.avatar} />
           <Text style={styles.name}>{lecturer.name}</Text>
           <Text style={styles.title}>{lecturer.title}</Text>
           <View style={styles.availableBadge}>
@@ -39,11 +43,6 @@ export default function LecturerDetailsScreen() {
             <Text style={styles.availableText}>
               Available for physical consultation
             </Text>
-          </View>
-          <View style={styles.ratingRow}>
-            <Ionicons name="star" size={16} color="#F4B400" />
-            <Text style={styles.rating}>{lecturer.rating}</Text>
-            <Text style={styles.reviews}>({lecturer.reviews} reviews)</Text>
           </View>
         </View>
 

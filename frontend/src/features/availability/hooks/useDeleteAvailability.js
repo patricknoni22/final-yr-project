@@ -1,1 +1,1 @@
-// Add implementation here
+export { useUpdateAvailability as useDeleteAvailability } from "./useUpdateAvailability";

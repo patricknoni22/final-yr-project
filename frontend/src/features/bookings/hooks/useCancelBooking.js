@@ -1,1 +1,4 @@
-// Add implementation here
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { cancelBooking } from "../api/bookingApi";
+
+export function useCancelBooking(options = {}) { const client = useQueryClient(); return useMutation({ mutationFn: cancelBooking, ...options, onSuccess: (...args) => { client.invalidateQueries({ queryKey: ["bookings"] }); client.invalidateQueries({ queryKey: ["dashboard"] }); options.onSuccess?.(...args); } }); }

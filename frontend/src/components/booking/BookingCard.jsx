@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Image, Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import Text from "../InterText";
+import InitialsAvatar from "../common/InitialsAvatar";
 
 const tones = {
   Approved: { background: "#E8F7EF", text: "#1D7A4D", icon: "checkmark-circle" },
@@ -8,14 +9,14 @@ const tones = {
   Completed: { background: "#EAF0F7", text: "#526577", icon: "checkmark-done-circle" },
 };
 
-export default function BookingCard({ booking, role = "student", onPress }) {
+export default function BookingCard({ booking, role = "student", onPress, onApprove, onReject }) {
   const tone = tones[booking.status] || tones.Pending;
   const isLecturer = role === "lecturer";
 
   return (
     <View style={styles.card}>
       <View style={styles.header}>
-        <Image source={booking.image} style={styles.avatar} />
+        <InitialsAvatar name={booking.name} size={48} style={styles.avatar} />
         <View style={styles.personCopy}>
           <Text style={styles.name}>{booking.name}</Text>
           <Text style={styles.secondary}>{booking.topic || booking.department}</Text>
@@ -27,11 +28,11 @@ export default function BookingCard({ booking, role = "student", onPress }) {
       </View>
 
       {isLecturer ? (
-        <View style={styles.metaBox}>
+        <Pressable style={styles.metaBox} onPress={onPress}>
           <Meta icon="calendar-outline" text={booking.date} />
           <Meta icon="time-outline" text={booking.time} />
           <Meta icon="location-outline" text={booking.location} />
-        </View>
+        </Pressable>
       ) : (
         <>
           <View style={styles.divider} />
@@ -45,8 +46,8 @@ export default function BookingCard({ booking, role = "student", onPress }) {
 
       {isLecturer && booking.status === "Pending" ? (
         <View style={styles.actions}>
-          <ActionButton label="Decline" icon="close" secondary />
-          <ActionButton label="Approve" icon="checkmark" />
+          <ActionButton label="Decline" icon="close" secondary onPress={onReject} />
+          <ActionButton label="Approve" icon="checkmark" onPress={onApprove} />
         </View>
       ) : (
         <Pressable style={[styles.fullButton, isLecturer && styles.lightButton]} onPress={onPress}>
@@ -71,9 +72,9 @@ function Meta({ icon, text }) {
   return <View style={styles.meta}><Ionicons name={icon} size={16} color="#52708D" /><Text style={styles.metaText}>{text}</Text></View>;
 }
 
-function ActionButton({ label, icon, secondary }) {
+function ActionButton({ label, icon, secondary, onPress }) {
   return (
-    <Pressable style={[styles.actionButton, secondary && styles.secondaryButton]}>
+    <Pressable style={[styles.actionButton, secondary && styles.secondaryButton]} onPress={onPress}>
       <Ionicons name={icon} size={17} color={secondary ? "#526577" : "#FFFFFF"} />
       <Text style={[styles.actionText, secondary && styles.secondaryText]}>{label}</Text>
     </Pressable>

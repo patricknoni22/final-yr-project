@@ -78,7 +78,22 @@ export async function getUserDashboard(req, res, next) {
 
     const bookings = await prisma.booking.findMany({
       where: { userId },
-      include: { service: true },
+      include: {
+        service: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                title: true,
+                department: true,
+                office: true,
+                imageUrl: true,
+              },
+            },
+          },
+        },
+      },
       orderBy: { startTime: "asc" },
     });
 

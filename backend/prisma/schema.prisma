@@ -24,6 +24,8 @@ model User {
   role             Role      @default(STUDENT)
   title            String?
   department       String?
+  faculty          String?
+  level            String?
   office           String?
   bio              String?
   studentId        String?

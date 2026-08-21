@@ -1,14 +1,14 @@
 import { prisma } from "../config/db.js";
 import { responseHandler } from "../middleware/responseHandler.js";
 
-const publicFields = { id: true, username: true, email: true, role: true, title: true, department: true, office: true, bio: true, studentId: true, imageUrl: true, academicFocus: true, averageRating: true, reviewsCount: true, isActive: true, isEmailVerified: true };
+const publicFields = { id: true, username: true, email: true, role: true, title: true, department: true, faculty: true, level: true, office: true, bio: true, studentId: true, imageUrl: true, academicFocus: true, averageRating: true, reviewsCount: true, isActive: true, isEmailVerified: true };
 
 export async function getMe(req, res, next) {
   try { responseHandler(res, 200, "Profile retrieved", await prisma.user.findUnique({ where: { id: req.user.userId }, select: publicFields })); } catch (err) { next(err); }
 }
 
 export async function updateMe(req, res, next) {
-  const allowed = ["username", "title", "department", "office", "bio", "studentId", "imageUrl", "academicFocus", "isActive"];
+  const allowed = ["username", "title", "department", "faculty", "level", "office", "bio", "studentId", "imageUrl", "academicFocus", "isActive"];
   const data = Object.fromEntries(Object.entries(req.body).filter(([key]) => allowed.includes(key)));
   try { responseHandler(res, 200, "Profile updated", await prisma.user.update({ where: { id: req.user.userId }, data, select: publicFields })); } catch (err) { next(err); }
 }
