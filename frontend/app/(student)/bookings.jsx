@@ -61,10 +61,12 @@ export default function StudentBookingsScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>Bookings</Text>
-        <Text style={styles.subtitle}>
-          Track and manage your consultation appointments.
-        </Text>
+        <View style={styles.hero}>
+          <Text style={styles.heroEyebrow}>YOUR SCHEDULE</Text>
+          <Text style={styles.heroTitle}>Bookings</Text>
+          <Text style={styles.heroSubtitle}>Track every consultation in one calm, organised place.</Text>
+          <View style={styles.heroCount}><Text style={styles.heroCountValue}>{visibleBookings.length}</Text><Text style={styles.heroCountLabel}>appointments</Text></View>
+        </View>
         <View style={styles.filters}>
           <BookingFilterTabs
             filters={filters}
@@ -99,7 +101,14 @@ export default function StudentBookingsScreen() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: "#F6F8FB" },
-  content: { padding: 20, paddingBottom: 36 },
+  content: { paddingHorizontal: 20, paddingTop: 24, paddingBottom: 40 },
+  hero: { position: "relative", minHeight: 170, padding: 22, borderRadius: 26, backgroundColor: "#003F78", overflow: "hidden" },
+  heroEyebrow: { color: "#BFD8ED", fontSize: 11, fontWeight: "700", letterSpacing: 1.2 },
+  heroTitle: { marginTop: 5, color: "#FFFFFF", fontSize: 30, fontWeight: "800" },
+  heroSubtitle: { marginTop: 6, maxWidth: 235, color: "#D7E6F2", fontSize: 13, lineHeight: 19 },
+  heroCount: { position: "absolute", right: 20, bottom: 18, alignItems: "center", justifyContent: "center", width: 82, height: 62, borderRadius: 18, backgroundColor: "rgba(255,255,255,0.14)" },
+  heroCountValue: { color: "#FFFFFF", fontSize: 22, fontWeight: "800" },
+  heroCountLabel: { color: "#D7E6F2", fontSize: 9, fontWeight: "600" },
   eyebrow: {
     color: "#52708D",
     fontSize: 12,

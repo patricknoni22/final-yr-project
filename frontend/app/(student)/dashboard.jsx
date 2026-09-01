@@ -1,4 +1,5 @@
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import {
   AppointmentCard,
@@ -50,10 +51,21 @@ export default function StudentDashboard() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>Hello, {profile?.username?.split(" ")[0] || "Student"}!</Text>
-        <Text style={styles.subtitle}>
-          Ready for your academic consultations today?
-        </Text>
+        <View style={styles.hero}>
+          <View style={styles.heroOrb} />
+          <View style={styles.welcomeRow}>
+            <View style={styles.welcomeCopy}>
+              <Text style={styles.heroEyebrow}>STUDENT SPACE</Text>
+              <Text style={styles.heroTitle}>Hello, {profile?.username?.split(" ")[0] || "Student"}!</Text>
+            </View>
+            <View style={styles.todayBadge}><Text style={styles.todayText}>Today</Text></View>
+          </View>
+          <Text style={styles.heroSubtitle}>Ready for your academic consultations today?</Text>
+          <Pressable style={styles.heroAction} onPress={() => router.push("/(student)/search")}>
+            <Ionicons name="add" size={19} color="#003F78" />
+            <Text style={styles.heroActionText}>Book a consultation</Text>
+          </Pressable>
+        </View>
 
         <View style={styles.stats}>
           <StatCard
@@ -115,7 +127,18 @@ export default function StudentDashboard() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: "#F6F8FB" },
-  content: { padding: 20, paddingBottom: 40 },
+  content: { paddingHorizontal: 20, paddingTop: 24, paddingBottom: 44 },
+  hero: { position: "relative", overflow: "hidden", padding: 22, borderRadius: 26, backgroundColor: "#003F78", shadowColor: "#003F78", shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.2, shadowRadius: 20, elevation: 6 },
+  heroOrb: { position: "absolute", width: 150, height: 150, right: -45, top: -65, borderRadius: 75, backgroundColor: "rgba(255,255,255,0.09)" },
+  welcomeRow: { flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between", gap: 12 },
+  welcomeCopy: { flex: 1 },
+  todayBadge: { marginTop: 3, paddingHorizontal: 11, paddingVertical: 7, borderRadius: 999, backgroundColor: "rgba(255,255,255,0.15)" },
+  todayText: { color: "#FFFFFF", fontSize: 11, fontWeight: "700" },
+  heroEyebrow: { color: "#BFD8ED", fontSize: 11, fontWeight: "700", letterSpacing: 1.2 },
+  heroTitle: { marginTop: 5, color: "#FFFFFF", fontSize: 27, lineHeight: 34, fontWeight: "800" },
+  heroSubtitle: { marginTop: 7, maxWidth: 260, color: "#D7E6F2", fontSize: 13, lineHeight: 19 },
+  heroAction: { alignSelf: "flex-start", minHeight: 43, marginTop: 18, paddingHorizontal: 14, flexDirection: "row", alignItems: "center", gap: 7, borderRadius: 13, backgroundColor: "#FFFFFF" },
+  heroActionText: { color: "#003F78", fontSize: 13, fontWeight: "700" },
   eyebrow: {
     color: "#52708D",
     fontSize: 12,
@@ -124,21 +147,22 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   title: {
-    marginTop: 3,
+    marginTop: 5,
     color: "#102F4E",
-    fontSize: 28,
-    lineHeight: 34,
+    fontSize: 29,
+    lineHeight: 35,
     fontWeight: "800",
   },
   subtitle: { marginTop: 5, color: "#687887", fontSize: 14, lineHeight: 20 },
-  stats: { marginTop: 22, flexDirection: "row", gap: 12 },
+  stats: { marginTop: 18, flexDirection: "row", gap: 12 },
   quickCard: {
     marginTop: 18,
     padding: 16,
     borderWidth: 1,
     borderColor: "#E0E6EC",
-    borderRadius: 14,
+    borderRadius: 20,
     backgroundColor: "#FFFFFF",
+    shadowColor: "#102F4E", shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.06, shadowRadius: 14, elevation: 2,
   },
   sectionTitle: {
     color: "#173A5E",

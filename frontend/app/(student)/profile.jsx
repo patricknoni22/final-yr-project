@@ -13,6 +13,7 @@ import Text, {
   InterTextInput as TextInput,
 } from "../../src/components/InterText";
 import NavHeader from "../../src/components/NavHeader";
+import InitialsAvatar from "../../src/components/common/InitialsAvatar";
 import { useLogout } from "../../src/features/auth/hooks/useAuth";
 import { useChangePassword, useMyProfile, useUpdateMyProfile } from "../../src/features/profile/hooks/useProfile";
 
@@ -80,7 +81,12 @@ export default function StudentSettingsScreen() {
         contentContainerStyle={styles.page}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.pageTitle}>Settings</Text>
+        <View style={styles.profileHero}>
+          <InitialsAvatar name={username || "Student"} size={64} style={styles.profileAvatar} />
+          <View style={styles.profileCopy}><Text style={styles.profileName}>{username || "Student"}</Text><Text style={styles.profileMeta}>{profile?.email || "Student account"}</Text></View>
+          <View style={styles.roleBadge}><Text style={styles.roleText}>STUDENT</Text></View>
+        </View>
+        <Text style={styles.pageTitle}>Account settings</Text>
         <View style={styles.titleRow}>
           <Text style={styles.subtitle}>
             Manage your student profile and account preferences
@@ -131,7 +137,7 @@ export default function StudentSettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: "#FFFFFF" },
+  safeArea: { flex: 1, backgroundColor: "#F5F7FA" },
   header: {
     height: 58,
     paddingHorizontal: 18,
@@ -145,7 +151,14 @@ const styles = StyleSheet.create({
   brandText: { color: "#003F78", fontSize: 16, fontWeight: "800" },
   headerActions: { flexDirection: "row", alignItems: "center", gap: 12 },
   headerAvatar: { width: 28, height: 28, borderRadius: 14 },
-  page: { padding: 16, paddingBottom: 28 },
+  page: { padding: 20, paddingBottom: 36 },
+  profileHero: { padding: 20, flexDirection: "row", alignItems: "center", gap: 13, borderRadius: 24, backgroundColor: "#003F78", marginBottom: 24 },
+  profileAvatar: { borderWidth: 3, borderColor: "rgba(255,255,255,0.35)" },
+  profileCopy: { flex: 1 },
+  profileName: { color: "#FFFFFF", fontSize: 18, fontWeight: "800" },
+  profileMeta: { marginTop: 4, color: "#C8DDEE", fontSize: 11 },
+  roleBadge: { paddingHorizontal: 8, paddingVertical: 5, borderRadius: 999, backgroundColor: "rgba(255,255,255,0.15)" },
+  roleText: { color: "#FFFFFF", fontSize: 9, fontWeight: "800", letterSpacing: 0.7 },
   pageTitle: {
     color: "#173A5E",
     fontSize: 28,
@@ -174,11 +187,12 @@ const styles = StyleSheet.create({
   settingsGrid: { width: "100%" },
   panels: { width: "100%", gap: 12 },
   panel: {
-    padding: 12,
+    padding: 18,
     borderWidth: 1,
     borderColor: "#E1E6EB",
-    borderRadius: 7,
-    backgroundColor: "#FAFBFC",
+    borderRadius: 20,
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#102F4E", shadowOpacity: 0.05, shadowRadius: 12, elevation: 2,
   },
   panelTitle: {
     marginBottom: 14,
@@ -271,6 +285,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontFamily: "Inter_600SemiBold",
   },
-  logoutButton: { height: 46, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, borderWidth: 1, borderColor: "#D56969", borderRadius: 7 },
+  logoutButton: { height: 50, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, borderWidth: 1, borderColor: "#D56969", borderRadius: 14, backgroundColor: "#FFF9F9" },
   logoutText: { color: "#B92D2D", fontSize: 14, fontWeight: "700" },
 });

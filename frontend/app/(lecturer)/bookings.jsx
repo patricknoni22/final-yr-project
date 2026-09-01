@@ -72,10 +72,11 @@ export default function LecturerBookingsScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.headingRow}>
+        <View style={styles.headingHero}>
           <View style={styles.headingCopy}>
-            <Text style={styles.title}>Bookings</Text>
-            <Text style={styles.subtitle}>
+            <Text style={styles.heroEyebrow}>APPOINTMENT CENTRE</Text>
+            <Text style={styles.heroTitle}>Bookings</Text>
+            <Text style={styles.heroSubtitle}>
               Review requests and manage your schedule.
             </Text>
           </View>
@@ -124,7 +125,11 @@ function ModalDetail({ icon, label, value }) {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: "#F6F8FB" },
-  content: { padding: 20, paddingBottom: 36 },
+  content: { paddingHorizontal: 20, paddingTop: 24, paddingBottom: 40 },
+  headingHero: { minHeight: 160, padding: 22, flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", gap: 12, borderRadius: 26, backgroundColor: "#003F78" },
+  heroEyebrow: { color: "#BFD8ED", fontSize: 11, fontWeight: "700", letterSpacing: 1.2 },
+  heroTitle: { marginTop: 5, color: "#FFFFFF", fontSize: 30, fontWeight: "800" },
+  heroSubtitle: { marginTop: 6, maxWidth: 220, color: "#D7E6F2", fontSize: 13, lineHeight: 19 },
   headingRow: {
     flexDirection: "row",
     alignItems: "flex-end",

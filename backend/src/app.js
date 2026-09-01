@@ -5,6 +5,7 @@ import express from "express";
 import cors from "cors";
 import router from "./route/router.js";
 import errorHandler from "./middleware/errorHandler.js";
+import { processAppointmentReminders } from "./services/notification.service.js";
 
 const app = express();
 
@@ -33,3 +34,9 @@ app.listen(PORT, () => {
     process.env.MONGODB_MODEL_API_KEY ? "Yes ✅" : "No ❌",
   );
 });
+
+const reminderTimer = setInterval(() => {
+  processAppointmentReminders().catch((error) => console.error("Reminder worker failed:", error.message));
+}, 5 * 60 * 1000);
+reminderTimer.unref();
+processAppointmentReminders().catch((error) => console.error("Initial reminder check failed:", error.message));

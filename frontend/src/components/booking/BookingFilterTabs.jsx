@@ -25,8 +25,8 @@ export function BookingEmptyState({ title, message }) {
 }
 
 const styles = StyleSheet.create({
-  filters: { padding: 4, flexDirection: "row", borderRadius: 10, backgroundColor: "#E8EDF3" },
-  filter: { flex: 1, minHeight: 38, alignItems: "center", justifyContent: "center", borderRadius: 8 },
+  filters: { padding: 5, flexDirection: "row", borderRadius: 15, backgroundColor: "#E8EDF3" },
+  filter: { flex: 1, minHeight: 42, alignItems: "center", justifyContent: "center", borderRadius: 11 },
   activeFilter: { backgroundColor: "#FFFFFF", shadowColor: "#16324D", shadowOpacity: 0.08, shadowRadius: 4, elevation: 2 },
   text: { color: "#667584", fontSize: 13, fontWeight: "600" },
   activeText: { color: "#003F78", fontWeight: "700" },

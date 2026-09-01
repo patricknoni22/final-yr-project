@@ -8,6 +8,9 @@ export default function StudentTabsLayout() {
         headerShown: false,
         tabBarActiveTintColor: "#003F78",
         tabBarInactiveTintColor: "#7B8491",
+        tabBarHideOnKeyboard: true,
+        tabBarStyle: { height: 72, paddingTop: 8, paddingBottom: 10, borderTopColor: "#E5EAF0", backgroundColor: "#FFFFFF", elevation: 12, shadowColor: "#102F4E", shadowOpacity: 0.08, shadowRadius: 16 },
+        tabBarLabelStyle: { fontSize: 11, fontWeight: "600" },
       }}
     >
       <Tabs.Screen
@@ -75,6 +78,7 @@ export default function StudentTabsLayout() {
         name="booking-details/[bookingId]"
         options={{ href: null }}
       />
+      <Tabs.Screen name="notifications" options={{ href: null }} />
     </Tabs>
   );
 }
