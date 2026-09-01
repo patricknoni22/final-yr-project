@@ -10,6 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { StatusBar } from "react-native";
 import QueryProvider from "../src/providers/QueryProvider";
+import NotificationBootstrap from "../src/components/notifications/NotificationBootstrap";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,6 +34,7 @@ export default function RootLayout() {
 
   return (
     <QueryProvider>
+      <NotificationBootstrap />
       <StatusBar style="light" backgroundColor="#003F78" />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(auth)" />

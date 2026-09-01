@@ -71,6 +71,9 @@ export default function SearchScreen() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
+        <Text style={styles.pageEyebrow}>FIND YOUR LECTURER</Text>
+        <Text style={styles.pageTitle}>Who would you like to meet?</Text>
+        <Text style={styles.pageSubtitle}>Search by lecturer, department, or subject area.</Text>
         <View style={styles.searchBox}>
           <Ionicons name="search-outline" size={18} color="#718096" />
           <TextInput
@@ -165,7 +168,7 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F5F7FA",
   },
   header: {
     height: 58,
@@ -191,18 +194,21 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 16,
-    paddingTop: 14,
-    paddingBottom: 24,
+    paddingTop: 22,
+    paddingBottom: 36,
   },
+  pageEyebrow: { color: "#52708D", fontSize: 11, fontWeight: "700", letterSpacing: 1 },
+  pageTitle: { marginTop: 5, color: "#102F4E", fontSize: 26, lineHeight: 32, fontWeight: "800", letterSpacing: -0.5 },
+  pageSubtitle: { marginTop: 5, marginBottom: 18, color: "#687887", fontSize: 13, lineHeight: 19 },
   searchBox: {
-    height: 44,
+    height: 52,
     paddingHorizontal: 13,
     flexDirection: "row",
     alignItems: "center",
     gap: 9,
     borderWidth: 1,
     borderColor: "#C9D0D8",
-    borderRadius: 6,
+    borderRadius: 15,
     backgroundColor: "#FFFFFF",
   },
   searchInput: {
@@ -275,13 +281,13 @@ const styles = StyleSheet.create({
     padding: 14,
     borderWidth: 1,
     borderColor: "#D3DAE2",
-    borderRadius: 7,
+    borderRadius: 20,
     backgroundColor: "#FFFFFF",
     shadowColor: "#0B2740",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 5,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 7 },
+    shadowOpacity: 0.07,
+    shadowRadius: 14,
+    elevation: 3,
   },
   cardTop: {
     flexDirection: "row",
@@ -291,7 +297,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 62,
     height: 62,
-    borderRadius: 5,
+    borderRadius: 14,
     resizeMode: "cover",
   },
   lecturerInfo: {

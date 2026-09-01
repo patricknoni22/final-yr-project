@@ -86,15 +86,17 @@ export default function LecturerDashboard() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>Welcome back, {formatLecturerName(profile?.username, profile?.title)}</Text>
-        <Text style={styles.subtitle}>
-          You have {pending.length} new booking requests.
-        </Text>
-        <Pressable style={styles.availabilityButton} onPress={() => router.push("/(lecturer)/availability")}>
-          <Ionicons name="calendar-outline" size={18} color="#FFFFFF" />
-          <Text style={styles.availabilityText}>Manage availability</Text>
-          <Ionicons name="arrow-forward" size={16} color="#FFFFFF" />
-        </Pressable>
+        <View style={styles.hero}>
+          <View style={styles.heroOrb} />
+          <Text style={styles.heroEyebrow}>LECTURER WORKSPACE</Text>
+          <Text style={styles.heroTitle}>Welcome back, {formatLecturerName(profile?.username, profile?.title)}</Text>
+          <Text style={styles.heroSubtitle}>You have {pending.length} new booking requests waiting.</Text>
+          <Pressable style={styles.availabilityButton} onPress={() => router.push("/(lecturer)/availability")}>
+            <Ionicons name="calendar-outline" size={18} color="#003F78" />
+            <Text style={styles.availabilityText}>Manage availability</Text>
+            <Ionicons name="arrow-forward" size={16} color="#003F78" />
+          </Pressable>
+        </View>
         <View style={styles.metrics}>
           {(dashboard ? apiMetrics : metrics).map((item) => (
             <MetricCard key={item.label} item={item} />
@@ -118,7 +120,12 @@ export default function LecturerDashboard() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: "#F6F8FB" },
-  content: { padding: 20, paddingBottom: 40 },
+  content: { paddingHorizontal: 20, paddingTop: 24, paddingBottom: 44 },
+  hero: { position: "relative", overflow: "hidden", padding: 22, borderRadius: 26, backgroundColor: "#003F78", shadowColor: "#003F78", shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.2, shadowRadius: 20, elevation: 6 },
+  heroOrb: { position: "absolute", width: 170, height: 170, right: -55, top: -80, borderRadius: 85, backgroundColor: "rgba(255,255,255,0.09)" },
+  heroEyebrow: { color: "#BFD8ED", fontSize: 11, fontWeight: "700", letterSpacing: 1.2 },
+  heroTitle: { marginTop: 5, maxWidth: 290, color: "#FFFFFF", fontSize: 25, lineHeight: 32, fontWeight: "800" },
+  heroSubtitle: { marginTop: 7, color: "#D7E6F2", fontSize: 13, lineHeight: 19 },
   eyebrow: {
     color: "#52708D",
     fontSize: 12,
@@ -129,24 +136,25 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 3,
     color: "#102F4E",
-    fontSize: 28,
-    lineHeight: 34,
+    fontSize: 29,
+    lineHeight: 36,
     fontWeight: "800",
   },
   subtitle: { marginTop: 5, color: "#687887", fontSize: 14, lineHeight: 20 },
   availabilityButton: {
-    minHeight: 48,
+    minHeight: 52,
     marginTop: 18,
     paddingHorizontal: 15,
     flexDirection: "row",
     alignItems: "center",
     gap: 9,
-    borderRadius: 10,
-    backgroundColor: "#003F78",
+    borderRadius: 15,
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#003F78", shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.18, shadowRadius: 12, elevation: 4,
   },
   availabilityText: {
     flex: 1,
-    color: "#FFFFFF",
+    color: "#003F78",
     fontSize: 14,
     fontWeight: "700",
   },

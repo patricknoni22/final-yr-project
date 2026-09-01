@@ -38,6 +38,7 @@ model User {
   booking          Booking[]
   token            Token?
   notifications    Notification[]
+  pushTokens       PushToken[]
   createdAt        DateTime  @default(now())
 }
 
@@ -100,7 +101,20 @@ model Notification {
   title     String
   message   String
   type      String?
+  bookingId String?  @db.ObjectId
   isRead    Boolean  @default(false)
+  pushSent  Boolean  @default(false)
+  reminderKey String?
   createdAt DateTime @default(now())
+}
+
+model PushToken {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @unique
+  platform  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 

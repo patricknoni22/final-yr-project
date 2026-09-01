@@ -1,15 +1,12 @@
 import { prisma } from "../config/db.js";
 import { responseHandler } from "../middleware/responseHandler.js";
 import { bookingModel, bookingUpdate } from "../model/booking.model.js";
+import { createNotification } from "../services/notification.service.js";
 
 const bookingInclude = {
   user: { select: { id: true, username: true, studentId: true, imageUrl: true } },
   service: { include: { user: { select: { id: true, username: true, title: true, department: true, office: true, imageUrl: true } } } }
 };
-
-async function notify(userId, title, message, type) {
-  return prisma.notification.create({ data: { userId, title, message, type } });
-}
 
 export async function booking(req, res, next) {
   const { lecturerId, startTime, endTime, reason } = req.body;
@@ -29,7 +26,7 @@ export async function booking(req, res, next) {
     const overlap = await prisma.booking.findFirst({ where: { serviceId, status: { not: "CANCELLED" }, startTime: { lt: end }, endTime: { gt: start } } });
     if (overlap) return res.status(409).json({ message: "Time slot already booked" });
     const item = await bookingModel(serviceId, req.user.userId, start, end, reason);
-    await notify(service.userId, "New booking request", "A student requested an appointment", "BOOKING_CREATED");
+    await createNotification({ userId: service.userId, bookingId: item.id, title: "New booking request", message: "A student requested an appointment", type: "BOOKING_CREATED" });
     responseHandler(res, 201, "Booking created successfully", item);
   } catch (err) { next(err); }
 }
@@ -57,7 +54,8 @@ async function setStatus(req, res, next, status, message) {
     const isOwner = existing.userId === req.user.userId || existing.service.userId === req.user.userId;
     if (!isOwner) return res.status(403).json({ message: "Unauthorized" });
     const item = await bookingUpdate(existing.id, status);
-    await notify(existing.userId, message, `Your booking is now ${status.toLowerCase()}`, `BOOKING_${status}`);
+    const recipientId = req.user.userId === existing.userId ? existing.service.userId : existing.userId;
+    await createNotification({ userId: recipientId, bookingId: existing.id, title: message, message: `The booking is now ${status.toLowerCase()}`, type: `BOOKING_${status}` });
     responseHandler(res, 200, message, item);
   } catch (err) { next(err); }
 }
@@ -75,7 +73,8 @@ export async function reschedule(req, res, next) {
     if (!existing) return res.status(404).json({ message: "Booking not found" });
     if (existing.userId !== req.user.userId && existing.service.userId !== req.user.userId) return res.status(403).json({ message: "Unauthorized" });
     const item = await prisma.booking.update({ where: { id: existing.id }, data: { startTime: new Date(newStartTime), endTime: new Date(newEndTime), status: "CONFIRMED" } });
-    await notify(existing.userId, "Booking rescheduled", "Your appointment time has changed", "BOOKING_RESCHEDULED");
+    const recipientId = req.user.userId === existing.userId ? existing.service.userId : existing.userId;
+    await createNotification({ userId: recipientId, bookingId: existing.id, title: "Booking rescheduled", message: "Your appointment time has changed", type: "BOOKING_RESCHEDULED" });
     responseHandler(res, 200, "Booking rescheduled", item);
   } catch (err) { next(err); }
 }

@@ -14,6 +14,7 @@ import Text, {
   InterTextInput as TextInput,
 } from "../../src/components/InterText";
 import NavHeader from "../../src/components/NavHeader";
+import InitialsAvatar from "../../src/components/common/InitialsAvatar";
 import { useLogout } from "../../src/features/auth/hooks/useAuth";
 import { useMyProfile, useUpdateMyProfile } from "../../src/features/profile/hooks/useProfile";
 
@@ -95,6 +96,11 @@ export default function LecturerSettingsScreen() {
         contentContainerStyle={styles.page}
         showsVerticalScrollIndicator={false}
       >
+        <View style={styles.profileHero}>
+          <InitialsAvatar name={form.username || "Lecturer"} size={64} style={styles.profileAvatar} />
+          <View style={styles.profileCopy}><Text style={styles.profileName}>{form.username || "Lecturer"}</Text><Text style={styles.profileMeta}>{form.title || "Lecturer"} · {form.department || "Department"}</Text></View>
+          <View style={styles.roleBadge}><Text style={styles.roleText}>LECTURER</Text></View>
+        </View>
         <View style={styles.topActions}>
           <TouchableOpacity style={styles.saveButton} onPress={saveProfile} disabled={updateMutation.isPending}>
             <Ionicons name="save-outline" size={14} color="#FFFFFF" />
@@ -159,7 +165,7 @@ export default function LecturerSettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: "#FFFFFF" },
+  safeArea: { flex: 1, backgroundColor: "#F5F7FA" },
   header: {
     minHeight: 68,
     paddingHorizontal: 16,
@@ -189,14 +195,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#003F78",
   },
   saveText: { color: "#FFFFFF", fontSize: 13, fontWeight: "600" },
-  page: { padding: 14, paddingBottom: 28, gap: 12 },
+  page: { padding: 20, paddingBottom: 36, gap: 14 },
+  profileHero: { padding: 20, flexDirection: "row", alignItems: "center", gap: 13, borderRadius: 24, backgroundColor: "#003F78" },
+  profileAvatar: { borderWidth: 3, borderColor: "rgba(255,255,255,0.35)" },
+  profileCopy: { flex: 1 },
+  profileName: { color: "#FFFFFF", fontSize: 18, fontWeight: "800" },
+  profileMeta: { marginTop: 4, color: "#C8DDEE", fontSize: 11 },
+  roleBadge: { paddingHorizontal: 8, paddingVertical: 5, borderRadius: 999, backgroundColor: "rgba(255,255,255,0.15)" },
+  roleText: { color: "#FFFFFF", fontSize: 9, fontWeight: "800", letterSpacing: 0.7 },
   topActions: { flexDirection: "row", justifyContent: "flex-end" },
   panel: {
-    padding: 13,
+    padding: 18,
     borderWidth: 1,
     borderColor: "#E1E6EB",
-    borderRadius: 7,
-    backgroundColor: "#FAFBFC",
+    borderRadius: 20,
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#102F4E", shadowOpacity: 0.05, shadowRadius: 12, elevation: 2,
   },
   sectionTitleRow: {
     marginBottom: 12,
@@ -314,6 +328,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontFamily: "Inter_600SemiBold",
   },
-  logoutButton: { height: 46, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, borderWidth: 1, borderColor: "#D56969", borderRadius: 7 },
+  logoutButton: { height: 50, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, borderWidth: 1, borderColor: "#D56969", borderRadius: 14, backgroundColor: "#FFF9F9" },
   logoutText: { color: "#B92D2D", fontSize: 14, fontWeight: "700" },
 });
