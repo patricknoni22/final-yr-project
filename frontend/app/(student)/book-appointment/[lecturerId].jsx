@@ -8,12 +8,13 @@ import { useLecturerDetails } from "../../../src/features/lecturers/hooks/useLec
 import { useCreateBooking } from "../../../src/features/bookings/hooks/useCreateBooking";
 import { buildBookableDates, buildTimeSlots, formatLecturer } from "../../../src/features/lecturers/utils/lecturerView";
 import InitialsAvatar from "../../../src/components/common/InitialsAvatar";
+import LoadingState from "../../../src/components/common/LoadingState";
 
 export default function BookAppointment() {
   const router = useRouter();
   const { lecturerId } = useLocalSearchParams();
   const resolvedId = typeof lecturerId === "string" ? lecturerId : "";
-  const { data } = useLecturerDetails(resolvedId);
+  const { data, isLoading } = useLecturerDetails(resolvedId);
   const fallback = lecturersById[resolvedId] || fallbackLecturer;
   const lecturer = data ? formatLecturer(data, require("../student-img/profile.png")) : fallback;
   const dates = data ? buildBookableDates(lecturer.service?.availability) : fallback.dates;
@@ -27,6 +28,8 @@ export default function BookAppointment() {
     onSuccess: () => setSent(true),
     onError: (error) => Alert.alert("Booking failed", error.response?.data?.message || error.message || "Please try again."),
   });
+
+  if (isLoading) return <LoadingState title="Preparing appointment times" message="We’re checking the lecturer’s latest availability." />;
 
   const submit = () => {
     if (!data) return Alert.alert("Please wait", "Lecturer availability is still loading.");

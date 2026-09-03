@@ -13,6 +13,7 @@ import { useStudentDashboard } from "../../src/features/dashboard/hooks/useDashb
 import { useMyProfile } from "../../src/features/profile/hooks/useProfile";
 import { formatBooking } from "../../src/features/bookings/utils/bookingView";
 import { useBookings } from "../../src/features/bookings/hooks/useBookings";
+import LoadingState from "../../src/components/common/LoadingState";
 
 const appointments = [
   {
@@ -35,9 +36,10 @@ const appointments = [
 
 export default function StudentDashboard() {
   const router = useRouter();
-  const { data: dashboard } = useStudentDashboard();
-  const { data: profile } = useMyProfile();
-  const { data: bookingData } = useBookings();
+  const { data: dashboard, isLoading: dashboardLoading } = useStudentDashboard();
+  const { data: profile, isLoading: profileLoading } = useMyProfile();
+  const { data: bookingData, isLoading: bookingsLoading } = useBookings();
+  if (dashboardLoading || profileLoading || bookingsLoading) return <LoadingState title="Preparing your dashboard" message="We’re bringing your schedule and profile together." />;
   const upcomingBookings = (bookingData || []).filter((item) => new Date(item.startTime) >= new Date() && !["CANCELLED", "REJECTED"].includes(item.status)).sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
   const apiAppointments = upcomingBookings.slice(0, 3).map((item) => {
     const booking = formatBooking(item, "student", require("./student-img/profile.png"));

@@ -12,6 +12,7 @@ import { useRejectBooking } from "../../src/features/bookings/hooks/useRejectBoo
 import { formatBooking } from "../../src/features/bookings/utils/bookingView";
 import AppModal from "../../src/components/common/AppModal";
 import { Ionicons } from "@expo/vector-icons";
+import LoadingState from "../../src/components/common/LoadingState";
 
 const filters = ["Requests", "Upcoming", "Approved", "Rejected"];
 const bookings = [
@@ -53,9 +54,10 @@ const bookings = [
 export default function LecturerBookingsScreen() {
   const [activeFilter, setActiveFilter] = useState("Requests");
   const [selectedBooking, setSelectedBooking] = useState(null);
-  const { data } = useBookings();
+  const { data, isLoading } = useBookings();
   const approveMutation = useApproveBooking();
   const rejectMutation = useRejectBooking();
+  if (isLoading) return <LoadingState title="Loading booking requests" message="We’re getting your latest appointment activity." />;
   const apiBookings = (data || []).map((item) => formatBooking(item, "lecturer", require("./lect-img/lec.png")));
   const currentBookings = data ? apiBookings : bookings;
   const visibleBookings = currentBookings.filter((item) => {

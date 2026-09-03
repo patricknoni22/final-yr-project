@@ -17,7 +17,9 @@ export async function booking(req, res, next) {
     const service = await prisma.service.findUnique({ where: { id: serviceId }, include: { availability: true } });
     if (!service) return res.status(404).json({ message: "Service not found" });
     const start = new Date(startTime); const end = new Date(endTime);
+    if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return res.status(400).json({ message: "Start and end times must be valid dates" });
     if (start >= end) return res.status(400).json({ message: "End time must be after start time" });
+    if (start <= new Date()) return res.status(400).json({ message: "Past time slots cannot be booked" });
     if ((end - start) / 60000 > service.duration) return res.status(400).json({ message: `Booking cannot exceed ${service.duration} minutes` });
     const slot = service.availability.find((item) => item.dayOfWeek === start.getDay());
     if (!slot) return res.status(400).json({ message: "Lecturer is unavailable on this day" });

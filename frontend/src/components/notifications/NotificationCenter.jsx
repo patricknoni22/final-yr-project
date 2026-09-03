@@ -4,6 +4,7 @@ import { Pressable, RefreshControl, SafeAreaView, ScrollView, StyleSheet, View }
 import Text from "../InterText";
 import { useNotifications } from "../../features/notifications/hooks/useNotifications";
 import { useMarkAllNotificationsAsRead, useMarkNotificationAsRead } from "../../features/notifications/hooks/useMarkNotificationAsRead";
+import LoadingState from "../common/LoadingState";
 
 const iconForType = (type = "") => type.includes("REMINDER") ? "alarm-outline" : type.includes("CREATED") ? "calendar-outline" : type.includes("CONFIRMED") ? "checkmark-circle-outline" : type.includes("REJECTED") || type.includes("CANCELLED") ? "close-circle-outline" : "notifications-outline";
 
@@ -29,7 +30,7 @@ export default function NotificationCenter({ role }) {
         <Pressable disabled={!unreadCount || readAll.isPending} onPress={() => readAll.mutate()} hitSlop={8}><Text style={[styles.readAll, !unreadCount && styles.disabled]}>Read all</Text></Pressable>
       </View>
       <ScrollView contentContainerStyle={styles.content} refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#003F78" />}>
-        {isLoading ? <Text style={styles.stateText}>Loading updates…</Text> : items.length ? items.map((item) => (
+        {isLoading ? <LoadingState compact title="Loading notifications" message="We’re checking for your latest appointment updates." /> : items.length ? items.map((item) => (
           <Pressable key={item.id} onPress={() => openItem(item)} style={[styles.card, !item.isRead && styles.unreadCard]}>
             <View style={[styles.iconBox, !item.isRead && styles.unreadIcon]}><Ionicons name={iconForType(item.type)} size={21} color="#003F78" /></View>
             <View style={styles.copy}><View style={styles.titleRow}><Text style={styles.itemTitle}>{item.title}</Text>{!item.isRead && <View style={styles.dot} />}</View><Text style={styles.message}>{item.message}</Text><Text style={styles.time}>{formatRelativeTime(item.createdAt)}</Text></View>

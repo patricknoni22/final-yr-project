@@ -15,6 +15,7 @@ import { useLecturers } from "../../src/features/lecturers/hooks/useLecturers";
 import { useDepartments } from "../../src/features/departments/hooks/useDepartments";
 import InitialsAvatar from "../../src/components/common/InitialsAvatar";
 import { formatLecturerName } from "../../src/features/lecturers/utils/lecturerView";
+import LoadingState from "../../src/components/common/LoadingState";
 
 const lecturers = [
   {
@@ -50,8 +51,9 @@ export default function SearchScreen() {
   const [department, setDepartment] = useState("All");
   const [availableToday, setAvailableToday] = useState(false);
   const [search, setSearch] = useState("");
-  const { data: lecturerData } = useLecturers({ search: search || undefined, department: department === "All" ? undefined : department });
-  const { data: departmentData } = useDepartments();
+  const { data: lecturerData, isLoading: lecturersLoading } = useLecturers({ search: search || undefined, department: department === "All" ? undefined : department });
+  const { data: departmentData, isLoading: departmentsLoading } = useDepartments();
+  if (lecturersLoading || departmentsLoading) return <LoadingState title="Finding lecturers" message="We’re loading departments and current availability." />;
   const apiDepartments = ["All", ...(departmentData || []).map((item) => item.name)];
   const today = new Date().getDay();
   const apiLecturers = (lecturerData || []).filter((item) => !availableToday || item.service?.some((service) => service.availability?.some((slot) => slot.dayOfWeek === today))).map((item) => {
