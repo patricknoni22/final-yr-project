@@ -22,6 +22,7 @@ import { useRejectBooking } from "../../src/features/bookings/hooks/useRejectBoo
 import { useMyProfile } from "../../src/features/profile/hooks/useProfile";
 import { formatBooking } from "../../src/features/bookings/utils/bookingView";
 import { formatLecturerName } from "../../src/features/lecturers/utils/lecturerView";
+import LoadingState from "../../src/components/common/LoadingState";
 
 const metrics = [
   {
@@ -60,11 +61,12 @@ const schedule = [
 
 export default function LecturerDashboard() {
   const router = useRouter();
-  const { data: dashboard } = useLecturerDashboard();
-  const { data: bookingData } = useBookings();
-  const { data: profile } = useMyProfile();
+  const { data: dashboard, isLoading: dashboardLoading } = useLecturerDashboard();
+  const { data: bookingData, isLoading: bookingsLoading } = useBookings();
+  const { data: profile, isLoading: profileLoading } = useMyProfile();
   const approveMutation = useApproveBooking();
   const rejectMutation = useRejectBooking();
+  if (dashboardLoading || bookingsLoading || profileLoading) return <LoadingState title="Preparing your dashboard" message="We’re loading requests, appointments, and insights." />;
   const formattedBookings = (bookingData || []).map((item) => formatBooking(item, "lecturer", require("./lect-img/lec.png")));
   const pending = formattedBookings.filter((item) => item.group === "Requests");
   const today = new Date();

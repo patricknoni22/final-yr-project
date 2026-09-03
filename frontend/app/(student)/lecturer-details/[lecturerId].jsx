@@ -12,12 +12,14 @@ import { fallbackLecturer, lecturersById } from "../../../src/data/lecturers";
 import { useLecturerDetails } from "../../../src/features/lecturers/hooks/useLecturerDetails";
 import { formatLecturer } from "../../../src/features/lecturers/utils/lecturerView";
 import InitialsAvatar from "../../../src/components/common/InitialsAvatar";
+import LoadingState from "../../../src/components/common/LoadingState";
 
 export default function LecturerDetailsScreen() {
   const router = useRouter();
   const { lecturerId } = useLocalSearchParams();
   const resolvedId = typeof lecturerId === "string" ? lecturerId : "";
-  const { data } = useLecturerDetails(resolvedId);
+  const { data, isLoading } = useLecturerDetails(resolvedId);
+  if (isLoading) return <LoadingState title="Loading lecturer profile" message="We’re checking their details and availability." />;
   const lecturer = data ? formatLecturer(data, require("../student-img/profile.png")) : lecturersById[resolvedId] || fallbackLecturer;
 
   return (

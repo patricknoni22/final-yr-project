@@ -16,6 +16,7 @@ import Text from "../../src/components/InterText";
 import NavHeader from "../../src/components/NavHeader";
 import { useAvailability } from "../../src/features/availability/hooks/useAvailability";
 import { useUpdateAvailability } from "../../src/features/availability/hooks/useUpdateAvailability";
+import LoadingState from "../../src/components/common/LoadingState";
 
 const durationOptions = [15, 30, 45, 60];
 const initialDays = [
@@ -29,7 +30,7 @@ const initialDays = [
 export default function AvailabilityScreen() {
   const [duration, setDuration] = useState(30);
   const [days, setDays] = useState(initialDays);
-  const { data } = useAvailability();
+  const { data, isLoading } = useAvailability();
   const updateMutation = useUpdateAvailability({
     onSuccess: () => Alert.alert("Saved", "Your availability has been updated."),
     onError: (error) => Alert.alert("Could not save", error.response?.data?.message || error.message),
@@ -43,6 +44,8 @@ export default function AvailabilityScreen() {
       return slot ? { ...day, enabled: true, start: to12Hour(slot.startTime), end: to12Hour(slot.endTime) } : { ...day, enabled: false };
     }));
   }, [data]);
+
+  if (isLoading) return <LoadingState title="Loading your availability" message="We’re retrieving your consultation schedule." />;
 
   const updateDay = (index, changes) => {
     setDays((current) =>

@@ -4,12 +4,14 @@ import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "re
 import Text from "../../../src/components/InterText";
 import { useBookingDetails } from "../../../src/features/bookings/hooks/useBookingDetails";
 import { formatBooking } from "../../../src/features/bookings/utils/bookingView";
+import LoadingState from "../../../src/components/common/LoadingState";
 
 export default function BookingDetails() {
   const router = useRouter();
   const params = useLocalSearchParams();
   const bookingId = typeof params.bookingId === "string" ? params.bookingId : "";
-  const { data } = useBookingDetails(bookingId);
+  const { data, isLoading } = useBookingDetails(bookingId);
+  if (isLoading) return <LoadingState title="Loading booking details" message="We’re retrieving the latest appointment information." />;
   const booking = data ? formatBooking(data, "student") : params;
   return (
     <SafeAreaView style={styles.safeArea}>

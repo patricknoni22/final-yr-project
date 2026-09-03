@@ -16,6 +16,7 @@ import NavHeader from "../../src/components/NavHeader";
 import InitialsAvatar from "../../src/components/common/InitialsAvatar";
 import { useLogout } from "../../src/features/auth/hooks/useAuth";
 import { useChangePassword, useMyProfile, useUpdateMyProfile } from "../../src/features/profile/hooks/useProfile";
+import LoadingState from "../../src/components/common/LoadingState";
 
 function Field({ label, value, secureTextEntry = false, ...props }) {
   return (
@@ -48,7 +49,7 @@ export default function StudentSettingsScreen() {
   const [level, setLevel] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const { data: profile } = useMyProfile();
+  const { data: profile, isLoading } = useMyProfile();
   const updateMutation = useUpdateMyProfile({ onSuccess: () => Alert.alert("Saved", "Your profile has been updated."), onError: (error) => Alert.alert("Could not save", error.response?.data?.message || error.message) });
   const passwordMutation = useChangePassword({ onSuccess: () => { setCurrentPassword(""); setNewPassword(""); Alert.alert("Password updated", "Your password has been changed."); }, onError: (error) => Alert.alert("Could not update password", error.response?.data?.message || error.message) });
   const logoutMutation = useLogout({
@@ -63,6 +64,8 @@ export default function StudentSettingsScreen() {
     setFaculty(profile.faculty || "");
     setLevel(profile.level || "");
   }, [profile]);
+
+  if (isLoading) return <LoadingState title="Loading your profile" message="We’re retrieving your account and academic details." />;
 
   const handleLogout = () => {
     Alert.alert("Log out", "Are you sure you want to log out?", [

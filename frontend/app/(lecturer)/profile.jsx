@@ -17,6 +17,7 @@ import NavHeader from "../../src/components/NavHeader";
 import InitialsAvatar from "../../src/components/common/InitialsAvatar";
 import { useLogout } from "../../src/features/auth/hooks/useAuth";
 import { useMyProfile, useUpdateMyProfile } from "../../src/features/profile/hooks/useProfile";
+import LoadingState from "../../src/components/common/LoadingState";
 
 function SectionTitle({ icon, children }) {
   return (
@@ -58,7 +59,7 @@ export default function LecturerSettingsScreen() {
   const [emailAlerts, setEmailAlerts] = useState(true);
   const [pushAlerts, setPushAlerts] = useState(false);
   const [form, setForm] = useState({ username: "", title: "", department: "", office: "", bio: "" });
-  const { data: profile } = useMyProfile();
+  const { data: profile, isLoading } = useMyProfile();
   const updateMutation = useUpdateMyProfile({ onSuccess: () => Alert.alert("Saved", "Your profile has been updated."), onError: (error) => Alert.alert("Could not save", error.response?.data?.message || error.message) });
   const logoutMutation = useLogout({ onSettled: () => router.replace("/sign-in") });
 
@@ -66,6 +67,8 @@ export default function LecturerSettingsScreen() {
     if (!profile) return;
     setForm({ username: profile.username || "", title: profile.title || "", department: profile.department || "", office: profile.office || "", bio: profile.bio || "" });
   }, [profile]);
+
+  if (isLoading) return <LoadingState title="Loading your profile" message="We’re retrieving your lecturer information and preferences." />;
 
   const setField = (key, value) => setForm((current) => ({ ...current, [key]: value }));
   const saveProfile = () => updateMutation.mutate({

@@ -7,6 +7,7 @@ import Text from "../../src/components/InterText";
 import NavHeader from "../../src/components/NavHeader";
 import { useBookings } from "../../src/features/bookings/hooks/useBookings";
 import { formatBooking } from "../../src/features/bookings/utils/bookingView";
+import LoadingState from "../../src/components/common/LoadingState";
 
 const filters = ["All", "Upcoming", "Completed"];
 const bookings = [
@@ -48,7 +49,8 @@ const bookings = [
 export default function StudentBookingsScreen() {
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState("All");
-  const { data } = useBookings();
+  const { data, isLoading } = useBookings();
+  if (isLoading) return <LoadingState title="Loading your bookings" message="We’re organising your upcoming consultations." />;
   const apiBookings = (data || []).map((item) => formatBooking(item, "student", require("./student-img/profile.png")));
   const visibleBookings = (data ? apiBookings : bookings).filter(
     (item) => activeFilter === "All" || item.group === activeFilter,

@@ -31,7 +31,7 @@ export function buildBookableDates(availability = [], count = 7) {
   return dates;
 }
 
-export function buildTimeSlots(availability = [], selectedDate, duration = 30) {
+export function buildTimeSlots(availability = [], selectedDate, duration = 30, now = new Date()) {
   if (!selectedDate?.value) return [];
   const period = availability.find((item) => item.dayOfWeek === selectedDate.value.getDay());
   if (!period) return [];
@@ -44,6 +44,9 @@ export function buildTimeSlots(availability = [], selectedDate, duration = 30) {
     const date = new Date(selectedDate.value);
     date.setHours(Math.floor(minute / 60), minute % 60, 0, 0);
     const slotEnd = new Date(date.getTime() + duration * 60000);
+    // Past slots are never bookable. Future dates are unaffected because their
+    // generated start times are greater than `now`.
+    if (date <= now) continue;
     const startLabel = date.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hour12: true }).toUpperCase();
     const endLabel = slotEnd.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hour12: true }).toUpperCase();
     slots.push({ label: `${startLabel} - ${endLabel}`, value: date });
