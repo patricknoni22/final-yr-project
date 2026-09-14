@@ -5,7 +5,8 @@ import {
   ChevronDown,
   Search,
   ArrowRight,
-  Sliders,
+  Menu,
+  X,
   Download,
   Check,
 } from "lucide-react";
@@ -22,7 +23,12 @@ export default function App() {
 
   return (
     <div className="smartmeet-app">
-      <header className="navbar">
+      <header className="navbar" onKeyDown={(event) => {
+        if (event.key === "Escape" && mobileMenuOpen) {
+          setMobileMenuOpen(false);
+          document.getElementById("mobile-menu-toggle")?.focus();
+        }
+      }}>
         <div className="container navbar-container">
           <a href="#" className="brand-logo" id="nav-brand-logo">
             <img
@@ -38,7 +44,14 @@ export default function App() {
             </div>
           </a>
 
-          <nav>
+          <nav
+            id="primary-navigation"
+            aria-label="Main navigation"
+            className={`primary-navigation${mobileMenuOpen ? " is-open" : ""}`}
+            onClick={(event) => {
+              if (event.target.closest("a")) setMobileMenuOpen(false);
+            }}
+          >
             <ul className="nav-links">
               <li>
                 <a href="#overview" className="nav-link active">
@@ -65,6 +78,11 @@ export default function App() {
                   FAQ
                 </a>
               </li>
+              <li className="mobile-download-link">
+                <a href={appDownloadUrl} download="SmartMeet.apk" className="btn btn-primary">
+                  <Download size={16} /> Download App
+                </a>
+              </li>
             </ul>
           </nav>
 
@@ -84,10 +102,12 @@ export default function App() {
             type="button"
             className="mobile-menu-btn"
             id="mobile-menu-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle navigation menu"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="primary-navigation"
           >
-            <Sliders size={22} />
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </header>
