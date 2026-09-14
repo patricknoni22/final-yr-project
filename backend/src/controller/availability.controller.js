@@ -14,11 +14,13 @@ export async function getAvailability(req, res, next) {
 export async function replaceAvailability(req, res, next) {
   const { duration, availability } = req.body;
   if (!Array.isArray(availability)) return res.status(400).json({ message: "Availability must be an array" });
+  if (duration !== undefined && (!Number.isInteger(Number(duration)) || Number(duration) <= 0 || Number(duration) > 1440)) return res.status(400).json({ message: "Enter a valid appointment duration" });
+  const clock = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+  if (availability.some((slot) => !Number.isInteger(slot.dayOfWeek) || slot.dayOfWeek < 0 || slot.dayOfWeek > 6 || !clock.test(slot.startTime) || !clock.test(slot.endTime) || slot.startTime >= slot.endTime)) return res.status(400).json({ message: "Each day needs valid start and end times, with the end after the start" });
   try {
     const service = await lecturerService(req.user.userId);
     if (!service) return res.status(404).json({ message: "Consultation service not found" });
-    await prisma.availability.deleteMany({ where: { serviceId: service.id } });
-    await prisma.service.update({ where: { id: service.id }, data: { duration: duration ? Number(duration) : service.duration, availability: { create: availability } } });
+    await prisma.service.update({ where: { id: service.id }, data: { duration: duration ? Number(duration) : service.duration, availability: { deleteMany: {}, create: availability.map(({ dayOfWeek, startTime, endTime }) => ({ dayOfWeek, startTime, endTime })) } } });
     responseHandler(res, 200, "Availability updated", await prisma.service.findUnique({ where: { id: service.id }, include: { availability: true } }));
   } catch (err) { next(err); }
 }

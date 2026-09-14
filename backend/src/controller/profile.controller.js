@@ -1,5 +1,8 @@
 import { prisma } from "../config/db.js";
 import { responseHandler } from "../middleware/responseHandler.js";
+import { blockingStatuses, withBookableSlots } from "../utils/bookableSlots.js";
+
+const serviceAvailability = () => ({ include: { availability: true, booking: { where: { status: { in: blockingStatuses }, endTime: { gt: new Date() } }, select: { startTime: true, endTime: true, status: true } } } });
 
 const publicFields = { id: true, username: true, email: true, role: true, title: true, department: true, faculty: true, level: true, office: true, bio: true, studentId: true, imageUrl: true, academicFocus: true, averageRating: true, reviewsCount: true, isActive: true, isEmailVerified: true };
 
@@ -19,16 +22,16 @@ export async function getLecturers(req, res, next) {
   if (department) where.department = department;
   if (search) where.OR = [{ username: { contains: search, mode: "insensitive" } }, { department: { contains: search, mode: "insensitive" } }];
   try {
-    const users = await prisma.user.findMany({ where, select: { ...publicFields, service: { include: { availability: true } } } });
-    responseHandler(res, 200, "Lecturers retrieved", users);
+    const users = await prisma.user.findMany({ where, select: { ...publicFields, service: serviceAvailability() } });
+    responseHandler(res, 200, "Lecturers retrieved", users.map((user) => withBookableSlots(user)));
   } catch (err) { next(err); }
 }
 
 export async function getLecturer(req, res, next) {
   try {
-    const user = await prisma.user.findFirst({ where: { id: req.params.id, role: "LECTURER" }, select: { ...publicFields, service: { include: { availability: true } } } });
+    const user = await prisma.user.findFirst({ where: { id: req.params.id, role: "LECTURER" }, select: { ...publicFields, service: serviceAvailability() } });
     if (!user) return res.status(404).json({ message: "Lecturer not found" });
-    responseHandler(res, 200, "Lecturer retrieved", user);
+    responseHandler(res, 200, "Lecturer retrieved", withBookableSlots(user));
   } catch (err) { next(err); }
 }
 

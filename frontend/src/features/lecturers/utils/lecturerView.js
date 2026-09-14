@@ -7,7 +7,7 @@ export function formatLecturer(lecturer, fallbackImage) {
     office: lecturer.office || "Office location unavailable",
     image: lecturer.imageUrl ? { uri: lecturer.imageUrl } : fallbackImage,
     about: lecturer.bio || "No biography has been added yet.",
-    service: lecturer.service?.[0],
+    service: lecturer.service?.find((item) => item.bookableDates?.length) || lecturer.service?.[0],
   };
 }
 
@@ -17,6 +17,20 @@ export function formatLecturerName(username, title) {
   if (!academicTitle) return name;
   if (name.toLowerCase().startsWith(academicTitle.toLowerCase())) return name;
   return `${academicTitle} ${name}`;
+}
+
+export function formatBookableDates(service, now = new Date()) {
+  const options = { timeZone: "Africa/Lagos" };
+  return (service?.bookableDates || []).map((day) => {
+    const value = new Date(`${day.id}T12:00:00+01:00`);
+    const slots = day.slots.filter((slot) => new Date(slot.startTime) > now).map((slot) => {
+      const start = new Date(slot.startTime);
+      const end = new Date(slot.endTime);
+      const clock = { ...options, hour: "numeric", minute: "2-digit", hour12: true };
+      return { id: slot.startTime, value: start, end, label: `${start.toLocaleTimeString("en-NG", clock)} - ${end.toLocaleTimeString("en-NG", clock)}` };
+    });
+    return { id: day.id, value, slots, day: value.toLocaleDateString("en-NG", { ...options, weekday: "short" }).toUpperCase(), date: String(Number(day.id.slice(-2))), label: value.toLocaleDateString("en-NG", { ...options, weekday: "long", month: "long", day: "numeric" }) };
+  }).filter((day) => day.slots.length);
 }
 
 export function buildBookableDates(availability = [], count = 7) {

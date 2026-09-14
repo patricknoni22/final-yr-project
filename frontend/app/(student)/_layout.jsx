@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function StudentTabsLayout() {
+  const { bottom } = useSafeAreaInsets();
   return (
     <Tabs
       screenOptions={{
@@ -9,7 +11,7 @@ export default function StudentTabsLayout() {
         tabBarActiveTintColor: "#003F78",
         tabBarInactiveTintColor: "#7B8491",
         tabBarHideOnKeyboard: true,
-        tabBarStyle: { height: 72, paddingTop: 8, paddingBottom: 10, borderTopColor: "#E5EAF0", backgroundColor: "#FFFFFF", elevation: 12, shadowColor: "#102F4E", shadowOpacity: 0.08, shadowRadius: 16 },
+        tabBarStyle: { height: 72 + bottom, paddingTop: 8, paddingBottom: 10 + bottom, borderTopColor: "#E5EAF0", backgroundColor: "#FFFFFF", elevation: 12, shadowColor: "#102F4E", shadowOpacity: 0.08, shadowRadius: 16 },
         tabBarLabelStyle: { fontSize: 11, fontWeight: "600" },
       }}
     >

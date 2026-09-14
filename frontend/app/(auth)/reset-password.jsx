@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import KeyboardFormScrollView from "../../src/components/common/KeyboardFormScrollView";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Alert, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
@@ -21,14 +22,14 @@ export default function ResetPasswordScreen() {
     mutation.mutate({ token: token.trim(), newPassword: password });
   };
 
-  return <SafeAreaView style={styles.page}><View style={styles.card}>
+  return <SafeAreaView style={styles.safeArea}><KeyboardFormScrollView contentContainerStyle={styles.page}><View style={styles.card}>
     <Text style={styles.title}>Reset password</Text>
     <Text style={styles.copy}>Enter the token from your email and choose a new password.</Text>
     <Field label="RESET TOKEN" value={token} onChangeText={setToken} autoCapitalize="none" />
     <Field label="NEW PASSWORD" value={password} onChangeText={setPassword} secureTextEntry />
     <Field label="CONFIRM PASSWORD" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry />
     <Pressable style={[styles.button, mutation.isPending && styles.disabled]} onPress={submit} disabled={mutation.isPending}><Text style={styles.buttonText}>{mutation.isPending ? "Resetting..." : "Reset password"}</Text></Pressable>
-  </View></SafeAreaView>;
+  </View></KeyboardFormScrollView></SafeAreaView>;
 }
 
 function Field({ label, ...props }) {
@@ -43,7 +44,8 @@ function Field({ label, ...props }) {
 }
 
 const styles = StyleSheet.create({
-  page: { flex: 1, padding: 24, alignItems: "center", justifyContent: "center", backgroundColor: "#F8F8FC" },
+  safeArea: { flex: 1, backgroundColor: "#F8F8FC" },
+  page: { flexGrow: 1, padding: 24, alignItems: "center", justifyContent: "center" },
   card: { width: "100%", maxWidth: 380, padding: 30, borderRadius: 12, backgroundColor: "#FFFFFF" },
   title: { fontSize: 26, fontWeight: "700", color: "#173A5E" },
   copy: { marginTop: 8, marginBottom: 24, color: "#65717D", lineHeight: 20 }, field: { marginBottom: 16 },
