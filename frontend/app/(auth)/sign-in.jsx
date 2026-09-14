@@ -1,10 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
+import KeyboardFormScrollView from "../../src/components/common/KeyboardFormScrollView";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
   Pressable,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   View,
   Alert,
@@ -48,7 +48,7 @@ export default function SignInScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView
+      <KeyboardFormScrollView
         contentContainerStyle={styles.page}
         showsVerticalScrollIndicator={false}
       >
@@ -114,7 +114,7 @@ export default function SignInScreen() {
             </Pressable>
           </View>
         </View>
-      </ScrollView>
+      </KeyboardFormScrollView>
     </SafeAreaView>
   );
 }

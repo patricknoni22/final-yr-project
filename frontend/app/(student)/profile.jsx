@@ -1,10 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
+import KeyboardFormScrollView from "../../src/components/common/KeyboardFormScrollView";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Alert,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -80,7 +80,7 @@ export default function StudentSettingsScreen() {
         actionIcon="search-outline"
       />
 
-      <ScrollView
+      <KeyboardFormScrollView
         contentContainerStyle={styles.page}
         showsVerticalScrollIndicator={false}
       >
@@ -134,7 +134,7 @@ export default function StudentSettingsScreen() {
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+      </KeyboardFormScrollView>
     </SafeAreaView>
   );
 }

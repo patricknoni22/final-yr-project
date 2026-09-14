@@ -17,33 +17,6 @@ import InitialsAvatar from "../../src/components/common/InitialsAvatar";
 import { formatLecturerName } from "../../src/features/lecturers/utils/lecturerView";
 import LoadingState from "../../src/components/common/LoadingState";
 
-const lecturers = [
-  {
-    id: "james",
-    name: "Prof. James Wilson",
-    department: "Computer Science",
-    availability: "AVAILABLE TODAY",
-    next: "Next: 2:00 PM - 2:30 PM",
-    image: require("./student-img/prof1.png"),
-  },
-  {
-    id: "elena",
-    name: "Dr. Elena Rodriguez",
-    department: "Engineering",
-    availability: "AVAILABLE TOMORROW",
-    next: "Next: Tomorrow 10:00 AM - 10:30 AM",
-    image: require("./student-img/prof2.png"),
-  },
-  {
-    id: "sarah",
-    name: "Prof. Sarah Chen",
-    department: "Arts & Design",
-    availability: "AVAILABLE TODAY",
-    next: "Next: 3:30 PM - 4:00 PM",
-    image: require("./student-img/prof3.png"),
-  },
-];
-
 const departments = ["All", "Computer Science", "Engineering"];
 
 export default function SearchScreen() {
@@ -55,12 +28,11 @@ export default function SearchScreen() {
   const { data: departmentData, isLoading: departmentsLoading } = useDepartments();
   if (lecturersLoading || departmentsLoading) return <LoadingState title="Finding lecturers" message="We’re loading departments and current availability." />;
   const apiDepartments = ["All", ...(departmentData || []).map((item) => item.name)];
-  const today = new Date().getDay();
-  const apiLecturers = (lecturerData || []).filter((item) => !availableToday || item.service?.some((service) => service.availability?.some((slot) => slot.dayOfWeek === today))).map((item) => {
-    const available = item.service?.some((service) => service.availability?.some((slot) => slot.dayOfWeek === today));
+  const apiLecturers = (lecturerData || []).filter((item) => !availableToday || item.availableToday).map((item) => {
+    const available = item.availableToday;
     return { id: item.id, name: formatLecturerName(item.username, item.title), department: item.department || "Department not set", availability: available ? "AVAILABLE TODAY" : "VIEW AVAILABILITY", next: available ? "Available today" : "Check available days", image: item.imageUrl ? { uri: item.imageUrl } : require("./student-img/profile.png") };
   });
-  const visibleLecturers = lecturerData ? apiLecturers : lecturers;
+  const visibleLecturers = apiLecturers;
   const visibleDepartments = departmentData ? apiDepartments : departments;
 
   return (
@@ -130,6 +102,7 @@ export default function SearchScreen() {
         </View>
 
         <View style={styles.cards}>
+          {!visibleLecturers.length && <Text>{lecturerData ? (availableToday ? "No lecturers have free appointment times left today." : "No lecturers match your search.") : "Could not load lecturers. Please try again."}</Text>}
           {visibleLecturers.map((lecturer) => (
             <View key={lecturer.id} style={styles.card}>
               <View style={styles.cardTop}>

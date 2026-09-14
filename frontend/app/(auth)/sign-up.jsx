@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
+import KeyboardFormScrollView from "../../src/components/common/KeyboardFormScrollView";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import Text, { InterTextInput as TextInput } from "../../src/components/InterText";
 import { useRegister } from "../../src/features/auth/hooks/useAuth";
 
@@ -42,7 +43,7 @@ export default function SignUpScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.page} showsVerticalScrollIndicator={false}>
+      <KeyboardFormScrollView contentContainerStyle={styles.page} showsVerticalScrollIndicator={false}>
         <View style={styles.card}>
           <Text style={styles.title}>Create Account</Text>
           <Text style={styles.subtitle}>Join the academic community today</Text>
@@ -79,7 +80,7 @@ export default function SignUpScreen() {
             <Pressable onPress={() => router.push("/sign-in")}><Text style={styles.accountLink}>Login</Text></Pressable>
           </View>
         </View>
-      </ScrollView>
+      </KeyboardFormScrollView>
     </SafeAreaView>
   );
 }

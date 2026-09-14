@@ -2,6 +2,7 @@ import { prisma } from "../config/db.js";
 import { responseHandler } from "../middleware/responseHandler.js";
 import { bookingModel, bookingUpdate } from "../model/booking.model.js";
 import { createNotification } from "../services/notification.service.js";
+import { blockingStatuses, isWithinAvailability } from "../utils/bookableSlots.js";
 
 const bookingInclude = {
   user: { select: { id: true, username: true, studentId: true, imageUrl: true } },
@@ -21,11 +22,8 @@ export async function booking(req, res, next) {
     if (start >= end) return res.status(400).json({ message: "End time must be after start time" });
     if (start <= new Date()) return res.status(400).json({ message: "Past time slots cannot be booked" });
     if ((end - start) / 60000 > service.duration) return res.status(400).json({ message: `Booking cannot exceed ${service.duration} minutes` });
-    const slot = service.availability.find((item) => item.dayOfWeek === start.getDay());
-    if (!slot) return res.status(400).json({ message: "Lecturer is unavailable on this day" });
-    const startClock = start.toTimeString().slice(0, 5); const endClock = end.toTimeString().slice(0, 5);
-    if (startClock < slot.startTime || endClock > slot.endTime) return res.status(400).json({ message: "Requested time is outside availability" });
-    const overlap = await prisma.booking.findFirst({ where: { serviceId, status: { not: "CANCELLED" }, startTime: { lt: end }, endTime: { gt: start } } });
+    if (!isWithinAvailability(service, start, end)) return res.status(400).json({ message: "Requested time is outside the lecturer's saved availability" });
+    const overlap = await prisma.booking.findFirst({ where: { serviceId, status: { in: blockingStatuses }, startTime: { lt: end }, endTime: { gt: start } } });
     if (overlap) return res.status(409).json({ message: "Time slot already booked" });
     const item = await bookingModel(serviceId, req.user.userId, start, end, reason);
     await createNotification({ userId: service.userId, bookingId: item.id, title: "New booking request", message: "A student requested an appointment", type: "BOOKING_CREATED" });
